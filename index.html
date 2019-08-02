@@ -43,7 +43,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar">
+			<img src="/assets/xixi.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/">John Doe</a></h1>
@@ -101,7 +101,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="/assets/xixi.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">John Doe</h1>
@@ -176,15 +176,7 @@
 <p>##持续更新##<br>1.在一个字符串(0&lt;=字符串长度&lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返</p>
 <p>回它的位置, 如果没有则返回 -1（需要区分大小写）.</p>
 <p>思路：控制时间和空间的效率，使用哈希表（key-value关系）</p>
-<p>import java.util.LinkedHashMap;<br>public class Solution {<br>    public int FirstNotRepeatingChar(String str) {<br>        char[] a=new char[256];<br>        LinkedHashMap&lt;Character,Integer&gt; map=new LinkedHashMap&lt;Character,Integer&gt;();<br>        if(str.equals(“”))return -1;<br>        else{<br>            for(int i=0;i&lt;str.length();i++){<br>                char s=str.charAt(i);<br>                if(map.containsKey(s)){<br>                    int j=map.get(s);<br>                    map.put(s,++j);<br>                }<br>                else map.put(s,1);<br>            }<br>            for(int i=0;i&lt;str.length();i++){<br>                if(map.get(str.charAt(i))==1)<br>                    return i;<br>            }</p>
-<pre><code>    }
-    return -1;
-}</code></pre><p>}</p>
-<p>2.在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数k，判断数组中是否含有该整数。</p>
-<p>思路：从右上角开始查找，分三种可能：<br>1.若相等则退出<br>2.若n&gt;k,则j-1<br>3.若n&lt;k,则i++</p>
-<p>public class Solution {<br>    public boolean Find(int target, int [][] array) {<br>        int i=0;<br>        int j=array[0].length-1;<br>        while((i&lt;array.length)&amp;&amp;(j&gt;=0)){<br>            if(target==array[i][j])return true;<br>            else{<br>                if(array[i][j]&gt;target){<br>                    –j;<br>                }<br>                else {<br>                    ++i;<br>                }<br>            }<br>        }<br>        return false;</p>
-<pre><code>}</code></pre><p>}</p>
-
+        
       
 
       

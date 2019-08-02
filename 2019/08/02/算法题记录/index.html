@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>算法题记录 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="##剑锋offer（Java）## ##持续更新##1.在一个字符串(0&amp;lt;=字符串长度&amp;lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返 回它的位置, 如果没有则返回 -1（需要区分大小写）. 思路：控制时间和空间的效率，使用哈希表（key-value关系） import java.util.LinkedHashMap;public class Solution {">
+  <meta name="description" content="##剑锋offer（Java）## ##持续更新##1.在一个字符串(0&amp;lt;=字符串长度&amp;lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返 回它的位置, 如果没有则返回 -1（需要区分大小写）. 思路：控制时间和空间的效率，使用哈希表（key-value关系）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="算法题记录">
 <meta property="og:url" content="http://yoursite.com/2019/08/02/算法题记录/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="##剑锋offer（Java）## ##持续更新##1.在一个字符串(0&amp;lt;=字符串长度&amp;lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返 回它的位置, 如果没有则返回 -1（需要区分大小写）. 思路：控制时间和空间的效率，使用哈希表（key-value关系） import java.util.LinkedHashMap;public class Solution {">
+<meta property="og:description" content="##剑锋offer（Java）## ##持续更新##1.在一个字符串(0&amp;lt;=字符串长度&amp;lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返 回它的位置, 如果没有则返回 -1（需要区分大小写）. 思路：控制时间和空间的效率，使用哈希表（key-value关系）">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-02T06:50:56.050Z">
+<meta property="og:updated_time" content="2019-08-02T08:27:27.688Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法题记录">
-<meta name="twitter:description" content="##剑锋offer（Java）## ##持续更新##1.在一个字符串(0&amp;lt;=字符串长度&amp;lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返 回它的位置, 如果没有则返回 -1（需要区分大小写）. 思路：控制时间和空间的效率，使用哈希表（key-value关系） import java.util.LinkedHashMap;public class Solution {">
+<meta name="twitter:description" content="##剑锋offer（Java）## ##持续更新##1.在一个字符串(0&amp;lt;=字符串长度&amp;lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返 回它的位置, 如果没有则返回 -1（需要区分大小写）. 思路：控制时间和空间的效率，使用哈希表（key-value关系）">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -47,7 +47,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar">
+			<img src="/assets/xixi.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/">John Doe</a></h1>
@@ -105,7 +105,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="/assets/xixi.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">John Doe</h1>
@@ -178,6 +178,7 @@
 <p>##持续更新##<br>1.在一个字符串(0&lt;=字符串长度&lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返</p>
 <p>回它的位置, 如果没有则返回 -1（需要区分大小写）.</p>
 <p>思路：控制时间和空间的效率，使用哈希表（key-value关系）</p>
+<a id="more"></a>
 <p>import java.util.LinkedHashMap;<br>public class Solution {<br>    public int FirstNotRepeatingChar(String str) {<br>        char[] a=new char[256];<br>        LinkedHashMap&lt;Character,Integer&gt; map=new LinkedHashMap&lt;Character,Integer&gt;();<br>        if(str.equals(“”))return -1;<br>        else{<br>            for(int i=0;i&lt;str.length();i++){<br>                char s=str.charAt(i);<br>                if(map.containsKey(s)){<br>                    int j=map.get(s);<br>                    map.put(s,++j);<br>                }<br>                else map.put(s,1);<br>            }<br>            for(int i=0;i&lt;str.length();i++){<br>                if(map.get(str.charAt(i))==1)<br>                    return i;<br>            }</p>
 <pre><code>    }
     return -1;
