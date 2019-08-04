@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>算法题记录 | Hexo</title>
+  <title>日历程序 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="##剑锋offer（Java）## ##持续更新##1.在一个字符串(0&amp;lt;=字符串长度&amp;lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返 回它的位置, 如果没有则返回 -1（需要区分大小写）. 思路：控制时间和空间的效率，使用哈希表（key-value关系）">
+  <meta name="description" content="*使用LocalDate写日历*显示当前页的日历**方法难点：minusDay(int day);方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1">
 <meta property="og:type" content="article">
-<meta property="og:title" content="算法题记录">
-<meta property="og:url" content="http://yoursite.com/2019/08/02/算法题记录/index.html">
+<meta property="og:title" content="日历程序">
+<meta property="og:url" content="http://yoursite.com/2019/08/04/日历程序/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="##剑锋offer（Java）## ##持续更新##1.在一个字符串(0&amp;lt;=字符串长度&amp;lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返 回它的位置, 如果没有则返回 -1（需要区分大小写）. 思路：控制时间和空间的效率，使用哈希表（key-value关系）">
+<meta property="og:description" content="*使用LocalDate写日历*显示当前页的日历**方法难点：minusDay(int day);方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-02T08:27:27.688Z">
+<meta property="og:updated_time" content="2019-08-04T13:50:28.873Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="算法题记录">
-<meta name="twitter:description" content="##剑锋offer（Java）## ##持续更新##1.在一个字符串(0&amp;lt;=字符串长度&amp;lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返 回它的位置, 如果没有则返回 -1（需要区分大小写）. 思路：控制时间和空间的效率，使用哈希表（key-value关系）">
+<meta name="twitter:title" content="日历程序">
+<meta name="twitter:description" content="*使用LocalDate写日历*显示当前页的日历**方法难点：minusDay(int day);方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -154,38 +154,30 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-算法题记录" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-日历程序" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      算法题记录
+      日历程序
     </h1>
   
 
         
-        <a href="/2019/08/02/算法题记录/" class="archive-article-date">
-  	<time datetime="2019-08-02T06:48:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-02</time>
+        <a href="/2019/08/04/日历程序/" class="archive-article-date">
+  	<time datetime="2019-08-04T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-04</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##剑锋offer（Java）##</p>
-<p>##持续更新##<br>1.在一个字符串(0&lt;=字符串长度&lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返</p>
-<p>回它的位置, 如果没有则返回 -1（需要区分大小写）.</p>
-<p>思路：控制时间和空间的效率，使用哈希表（key-value关系）</p>
+        <p>*<em>使用LocalDate写日历<br>*</em>显示当前页的日历<br>**方法难点：minusDay(int day);<br>方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1</p>
+<hr>
 <a id="more"></a>
-<p>import java.util.LinkedHashMap;<br>public class Solution {<br>    public int FirstNotRepeatingChar(String str) {<br>        char[] a=new char[256];<br>        LinkedHashMap&lt;Character,Integer&gt; map=new LinkedHashMap&lt;Character,Integer&gt;();<br>        if(str.equals(“”))return -1;<br>        else{<br>            for(int i=0;i&lt;str.length();i++){<br>                char s=str.charAt(i);<br>                if(map.containsKey(s)){<br>                    int j=map.get(s);<br>                    map.put(s,++j);<br>                }<br>                else map.put(s,1);<br>            }<br>            for(int i=0;i&lt;str.length();i++){<br>                if(map.get(str.charAt(i))==1)<br>                    return i;<br>            }</p>
-<pre><code>    }
-    return -1;
-}</code></pre><p>}</p>
-<p>2.在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数k，判断数组中是否含有该整数。</p>
-<p>思路：从右上角开始查找，分三种可能：<br>1.若相等则退出<br>2.若n&gt;k,则j-1<br>3.若n&lt;k,则i++</p>
-<p>public class Solution {<br>    public boolean Find(int target, int [][] array) {<br>        int i=0;<br>        int j=array[0].length-1;<br>        while((i&lt;array.length)&amp;&amp;(j&gt;=0)){<br>            if(target==array[i][j])return true;<br>            else{<br>                if(array[i][j]&gt;target){<br>                    –j;<br>                }<br>                else {<br>                    ++i;<br>                }<br>            }<br>        }<br>        return false;</p>
+<p>假如当前为2019-8-4<br>import java.time.<em>;<br>public class CalendarTest {<br>    public static void main(String args[]){<br>        LocalDate date=LocalDate.now();//date=2018-8-4<br>        int month=date.getMonthValue();<br>        int today=date.getDayOfMonth();<br>        date=date.minusDays(today-1);//date=2018-8-1<br>        DayOfWeek weekday=date.getDayOfWeek();<br>        int value=weekday.getValue();<br>        System.out.println(“Mon Tue Wed Thu Fri Sat Sun”);<br>        for(int i=1;i&lt;value;i++)<br>            System.out.print(“0”);<br>        while(date.getMonthValue()==month){<br>            System.out.printf(“%3d”,date.getDayOfMonth());<br>            if(date.getDayOfMonth()==today)<br>                System.out.print(“</em>“);<br>            else<br>                System.out.print(“ “);<br>            date=date.plusDays(1);<br>            if(date.getDayOfWeek().getValue()==1)<br>                System.out.println();<br>        }<br>        if(date.getDayOfWeek().getValue()!=1)System.out.println();</p>
 <pre><code>}</code></pre><p>}</p>
 
       
@@ -266,7 +258,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/02/算法题记录/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/04/日历程序/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -280,18 +272,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/08/04/日历程序/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          日历程序
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/08/01/我的第一篇博客/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">我的第一篇博客</div>
+    <a href="/2019/08/02/算法题记录/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">算法题记录</div>
       <i class="icon-circle-right"></i>
     </a>
   
