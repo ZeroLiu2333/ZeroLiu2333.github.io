@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="*使用LocalDate写日历*显示当前页的日历**方法难点：minusDay(int day);方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-05T12:46:28.945Z">
+<meta property="og:updated_time" content="2019-08-05T13:40:24.097Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="日历程序">
 <meta name="twitter:description" content="*使用LocalDate写日历*显示当前页的日历**方法难点：minusDay(int day);方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1">
@@ -177,9 +177,21 @@
         <p>*<em>使用LocalDate写日历<br>*</em>显示当前页的日历<br>**方法难点：minusDay(int day);<br>方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1</p>
 <hr>
 <a id="more"></a>
-<p>假如当前为2019-8-4<br>import java.time.<em>;<br>public class CalendarTest {<br>    public static void main(String args[]){<br>        LocalDate date=LocalDate.now();//date=2018-8-4<br>        int month=date.getMonthValue();<br>        int today=date.getDayOfMonth();<br>        date=date.minusDays(today-1);//date=2018-8-1<br>        DayOfWeek weekday=date.getDayOfWeek();<br>        int value=weekday.getValue();<br>        System.out.println(“Mon Tue Wed Thu Fri Sat Sun”);<br>        for(int i=1;i&lt;value;i++)<br>            System.out.print(“0”);<br>        while(date.getMonthValue()==month){<br>            System.out.printf(“%3d”,date.getDayOfMonth());<br>            if(date.getDayOfMonth()==today)<br>                System.out.print(“</em>“);<br>            else<br>                System.out.print(“ “);<br>            date=date.plusDays(1);<br>            if(date.getDayOfWeek().getValue()==1)<br>                System.out.println();<br>        }<br>        if(date.getDayOfWeek().getValue()!=1)System.out.println();</p>
-<pre><code>}</code></pre><p>}</p>
+<p>假如当前为2019-8-4</p>
+<pre><code>
+import java.time.*;
+public class CalendarTest {
+    public static void main(String args[]){
+        LocalDate date=LocalDate.now();//date=2018-8-4
+        int month=date.getMonthValue();
+        int today=date.getDayOfMonth();
+        date=date.minusDays(today-1);//date=2018-8-1
+        DayOfWeek weekday=date.getDayOfWeek();
+        int value=weekday.getValue();
+        System.out.println("Mon Tue Wed Thu Fri Sat Sun");
+        for(int i=1;i<value;i++) system.out.print("0"); while(date.getmonthvalue()="=month){" system.out.printf("%3d",date.getdayofmonth()); if(date.getdayofmonth()="=today)" system.out.print("*"); else system.out.print(" "); date="date.plusDays(1);" if(date.getdayofweek().getvalue()="=1)" system.out.println(); } if(date.getdayofweek().getvalue()!="1)System.out.println();" < pre></value;i++)></code>
 
+</pre>
       
 
       
