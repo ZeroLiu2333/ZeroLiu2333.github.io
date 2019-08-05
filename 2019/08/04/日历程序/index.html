@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>日历程序 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="*使用LocalDate写日历*显示当前页的日历**方法难点：minusDay(int day);方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1">
+  <meta name="description" content="#使用LocalDate写日历  显示当前页的日历方法难点：minusDay(int day);方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="日历程序">
 <meta property="og:url" content="http://yoursite.com/2019/08/04/日历程序/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="*使用LocalDate写日历*显示当前页的日历**方法难点：minusDay(int day);方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1">
+<meta property="og:description" content="#使用LocalDate写日历  显示当前页的日历方法难点：minusDay(int day);方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-05T13:40:24.097Z">
+<meta property="og:updated_time" content="2019-08-05T14:30:36.174Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="日历程序">
-<meta name="twitter:description" content="*使用LocalDate写日历*显示当前页的日历**方法难点：minusDay(int day);方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1">
+<meta name="twitter:description" content="#使用LocalDate写日历  显示当前页的日历方法难点：minusDay(int day);方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -174,24 +174,37 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>*<em>使用LocalDate写日历<br>*</em>显示当前页的日历<br>**方法难点：minusDay(int day);<br>方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1</p>
-<hr>
+        <p>#使用LocalDate写日历</p>
+<blockquote>
+<p>显示当前页的日历<br><br>方法难点：minusDay(int day);<br>方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1</p>
+</blockquote>
 <a id="more"></a>
 <p>假如当前为2019-8-4</p>
-<pre><code>
-import java.time.*;
+<pre><code>import java.time.*;
 public class CalendarTest {
-    public static void main(String args[]){
-        LocalDate date=LocalDate.now();//date=2018-8-4
-        int month=date.getMonthValue();
-        int today=date.getDayOfMonth();
-        date=date.minusDays(today-1);//date=2018-8-1
-        DayOfWeek weekday=date.getDayOfWeek();
-        int value=weekday.getValue();
-        System.out.println("Mon Tue Wed Thu Fri Sat Sun");
-        for(int i=1;i<value;i++) system.out.print("0"); while(date.getmonthvalue()="=month){" system.out.printf("%3d",date.getdayofmonth()); if(date.getdayofmonth()="=today)" system.out.print("*"); else system.out.print(" "); date="date.plusDays(1);" if(date.getdayofweek().getvalue()="=1)" system.out.println(); } if(date.getdayofweek().getvalue()!="1)System.out.println();" < pre></value;i++)></code>
+public static void main(String args[]){
+    LocalDate date=LocalDate.now();//date=2018-8-4
+    int month=date.getMonthValue();
+    int today=date.getDayOfMonth();
+    date=date.minusDays(today-1);//date=2018-8-1
+    DayOfWeek weekday=date.getDayOfWeek();
+    int value=weekday.getValue();
+System.out.println(&quot;Mon Tue Wed Thu Fri Sat Sun&quot;);
+    for(int i=1;i&lt;value;i++)
+        System.out.print(&quot;0&quot;);
+    while(date.getMonthValue()==month){
+        System.out.printf(&quot;%3d&quot;,date.getDayOfMonth());
+        if(date.getDayOfMonth()==today)
+            System.out.print(&quot;*&quot;);
+        else
+            System.out.print(&quot; &quot;);
+        date=date.plusDays(1);
+        if(date.getDayOfWeek().getValue()==1)
+            System.out.println();
+    }
+    if(date.getDayOfWeek().getValue()!=1)System.out.println();
 
-</pre>
+}</code></pre>
       
 
       
