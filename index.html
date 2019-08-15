@@ -152,113 +152,30 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-@ResponseBody和@RequestMapping的原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-抽象类和接口" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/11/抽象类和接口/">抽象类和接口的区别以及作用</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/11/抽象类和接口/" class="archive-article-date">
+  	<time datetime="2019-08-11T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-11</time>
+</a>
+        
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#@ResponseBody和@RequestMapping的原理</p>
-<blockquote>
-<p>1.@RequestMapping 是一个用来处理请求地址映射的注解，可用于类或方法上。用于类上，表示类中的所有响应请求的方法都是以该地址作为父路径；用于方法上，表示在类的父路径下追加方法上注解中的地址将会访问到该方法</p>
+        <blockquote>
+<p>#抽象类和接口的区别以及作用<br>在一开始的学习中，我觉得抽象类和接口就是差不多的东西，但是在开发项目的时候，参考到很多大佬的项目都是使用接口-&gt;抽象类-&gt;实例类来开发一个类或功能，我就开始思考，既然使用抽象类了，为什么不直接使用接口，还要在中间加一层抽象类，这不是增加代码量吗？后来我看书就发现，得出了以下的结论，并且解开了我的疑惑。</p>
 </blockquote>
-<blockquote>
-<p>2.@Responsebody 注解表示该方法的返回的结果直接写入 HTTP 响应正文（ResponseBody）中，一般在异步获取数据时使用，通常是在使用 @RequestMapping 后，返回值通常解析为跳转路径，加上 @Responsebody 后返回结果不会被解析为跳转路径，而是直接写入HTTP 响应正文中。 </p>
-</blockquote>
-<blockquote>
-<p>这两个注解经常会一起使用，但是这两个注解的使用方法一定要区分。<br><br>1）只是想获取ajax的数据，而且打印return的信息的话，就使用@Responsebody。</p>
-</blockquote>
-<blockquote>
-<p>2)只是跳转页面，或者返回数据给模板，就单独用@RequestMapping</p>
-</blockquote>
-<p>Ajax是不刷新页面，也能让前后端的数据交互，因此我认为Ajax用于检验数据是否正确，例如登陆页面，注册页面等。这时候，设计一个Result类就是用于处理Ajax数据的回调，用于判断Ajax得到后端的数据是怎么样，返回一个类似于布尔值+数据的类给前端，然后再返回结果。</p>
-<blockquote>
-<p>Result类</p>
-</blockquote>
-<pre><code>public class Result&lt;T&gt; {
-private int code;
-private String msg;
-private T data;
-//success
-private Result(T data) {
-    this.code=0;
-    this.msg=&quot;success&quot;;
-    this.data=data;
-}
-//error
-private Result(CodeMsg cm) {
-    if(cm==null) {
-        return;
-    }
-
-    this.code=cm.getCode();
-    this.msg=cm.getMsg();
-}
-//成功
-public static &lt;T&gt; Result&lt;T&gt; success(T data){
-    return new Result&lt;T&gt;(data) ;
-}
-
-// 失败
-public static &lt;T&gt; Result&lt;T&gt; error(CodeMsg sm) {//CodeMsg包含了code和msg
-    return new Result&lt;T&gt;(sm);
-}
-public int getCode() {
-    return code;
-}
-public void setCode(int code) {
-    this.code = code;
-}
-public String getMsg() {
-    return msg;
-}
-public void setMsg(String msg) {
-    this.msg = msg;
-}
-public T getData() {
-    return data;
-}
-public void setData(T data) {
-    this.data = data;
-}
-
-}</code></pre><blockquote>
-<p>CodeMsg类—失败的信息</p>
-</blockquote>
-<pre><code>public class CodeMsg {
-private int code;
-private String msg;
-public static CodeMsg success=new CodeMsg(0,&quot;sucess&quot;);
-public static CodeMsg userEmpt=new CodeMsg(1,&quot;用户名或密码不正确&quot;);
-
-public int getCode() {
-    return code;
-}
-
-public void setCode(int code) {
-    this.code = code;
-}
-
-public String getMsg() {
-    return msg;
-}
-
-public void setMsg(String msg) {
-    this.msg = msg;
-}
-
-@Override
-public String toString() {
-    return &quot;CodeMsg{&quot; +
-            &quot;code=&quot; + code +
-            &quot;, msg=&apos;&quot; + msg + &apos;\&apos;&apos; +
-            &apos;}&apos;;
-}
-private CodeMsg(int code,String msg){
-    this.code=code;
-    this.msg=msg;
-
-}
-}</code></pre>
+        
       
 
       
@@ -270,7 +187,7 @@ private CodeMsg(int code,String msg){
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/15/@ResponseBody和@RequestMapping的原理/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/08/11/抽象类和接口/">展开全文 >></a>
         </p>
       
 
@@ -300,13 +217,32 @@ private CodeMsg(int code,String msg){
 
 
   
-    <article id="post-抽象类和接口" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-@ResponseBody和@RequestMapping的原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/10/@ResponseBody和@RequestMapping的原理/">ResponseBody和RequestMapping的原理</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/10/@ResponseBody和@RequestMapping的原理/" class="archive-article-date">
+  	<time datetime="2019-08-10T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-10</time>
+</a>
+        
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>#抽象类和接口的区别以及作用<br>在一开始的学习中，我觉得抽象类和接口就是差不多的东西，但是在开发项目的时候，参考到很多大佬的项目都是使用接口-&gt;抽象类-&gt;实例类来开发一个类或功能，我就开始思考，既然使用抽象类了，为什么不直接使用接口，还要在中间加一层抽象类，这不是增加代码量吗？后来我看书就发现，得出了以下的结论，并且解开了我的疑惑。</p>
+        <p>#@ResponseBody和@RequestMapping的原理</p>
+<blockquote>
+<p>1.@RequestMapping 是一个用来处理请求地址映射的注解，可用于类或方法上。用于类上，表示类中的所有响应请求的方法都是以该地址作为父路径；用于方法上，表示在类的父路径下追加方法上注解中的地址将会访问到该方法</p>
+</blockquote>
+<blockquote>
+<p>2.@Responsebody 注解表示该方法的返回的结果直接写入 HTTP 响应正文（ResponseBody）中，一般在异步获取数据时使用，通常是在使用 @RequestMapping 后，返回值通常解析为跳转路径，加上 @Responsebody 后返回结果不会被解析为跳转路径，而是直接写入HTTP 响应正文中。 </p>
 </blockquote>
         
       
@@ -320,7 +256,7 @@ private CodeMsg(int code,String msg){
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/15/抽象类和接口/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/08/10/@ResponseBody和@RequestMapping的原理/">展开全文 >></a>
         </p>
       
 
@@ -353,6 +289,21 @@ private CodeMsg(int code,String msg){
     <article id="post-回溯和递归的区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/09/回溯和递归的区别/">回溯和递归的区别</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/09/回溯和递归的区别/" class="archive-article-date">
+  	<time datetime="2019-08-09T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-09</time>
+</a>
+        
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
         <p>#回溯和递归的区别<br>用一道迷宫来讲解回溯和递归的区别：</p>
@@ -377,7 +328,7 @@ private CodeMsg(int code,String msg){
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/08/回溯和递归的区别/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/08/09/回溯和递归的区别/">展开全文 >></a>
         </p>
       
 
@@ -409,6 +360,21 @@ private CodeMsg(int code,String msg){
   
     <article id="post-剑指offer" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/08/剑指offer/">替换空格类题目</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/08/剑指offer/" class="archive-article-date">
+  	<time datetime="2019-08-08T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
+</a>
+        
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
@@ -523,7 +489,7 @@ public static int sort(int start,int end,int[] a){
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/06/剑指offer/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/08/08/剑指offer/">展开全文 >></a>
         </p>
       
 

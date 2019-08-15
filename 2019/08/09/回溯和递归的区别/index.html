@@ -6,19 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hexo</title>
+  <title>回溯和递归的区别 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="剑指offer  替换空格类题目的延伸（降低时间复杂度）  两种方法：  方法一：时间复杂度为O(nn)从头到尾替换字符串的每个空格为“%20”，假设有n个空格，最后一个字符串要移动n次才能完成空格替换，因此时间复杂度为o(nn)方法二：时间复杂度为O(n)从尾向头移动，假设有n个空格，每个字符串都是移动一次就完成空格替换，因此时间复杂度为o(n)     单链表的难点 p=p-&amp;gt;next">
+  <meta name="description" content="#回溯和递归的区别用一道迷宫来讲解回溯和递归的区别：  如果一个问题问迷宫有多少种方法可以出去，那么就是递归，因为它的值是确定。    如果一个问题问迷宫走这条路能不能出去，那么就是回溯，因为回溯是探索这条路能不能行得通，行不通就行不通。   递归是一种解法,它肯定会有一个确定的值，但是回溯只是一个搜索的过程，这个结果可能存在，也可能不存在。回溯是在递归过程的一个剪枝的步骤。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/2019/08/06/剑指offer/index.html">
+<meta property="og:title" content="回溯和递归的区别">
+<meta property="og:url" content="http://yoursite.com/2019/08/09/回溯和递归的区别/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="剑指offer  替换空格类题目的延伸（降低时间复杂度）  两种方法：  方法一：时间复杂度为O(nn)从头到尾替换字符串的每个空格为“%20”，假设有n个空格，最后一个字符串要移动n次才能完成空格替换，因此时间复杂度为o(nn)方法二：时间复杂度为O(n)从尾向头移动，假设有n个空格，每个字符串都是移动一次就完成空格替换，因此时间复杂度为o(n)     单链表的难点 p=p-&amp;gt;next">
+<meta property="og:description" content="#回溯和递归的区别用一道迷宫来讲解回溯和递归的区别：  如果一个问题问迷宫有多少种方法可以出去，那么就是递归，因为它的值是确定。    如果一个问题问迷宫走这条路能不能出去，那么就是回溯，因为回溯是探索这条路能不能行得通，行不通就行不通。   递归是一种解法,它肯定会有一个确定的值，但是回溯只是一个搜索的过程，这个结果可能存在，也可能不存在。回溯是在递归过程的一个剪枝的步骤。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-07T14:48:39.109Z">
+<meta property="og:image" content="https://img-blog.csdn.net/20180906152342793?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzI5Njk0OTYz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:updated_time" content="2019-08-15T14:49:02.380Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="剑指offer  替换空格类题目的延伸（降低时间复杂度）  两种方法：  方法一：时间复杂度为O(nn)从头到尾替换字符串的每个空格为“%20”，假设有n个空格，最后一个字符串要移动n次才能完成空格替换，因此时间复杂度为o(nn)方法二：时间复杂度为O(n)从尾向头移动，假设有n个空格，每个字符串都是移动一次就完成空格替换，因此时间复杂度为o(n)     单链表的难点 p=p-&amp;gt;next">
+<meta name="twitter:title" content="回溯和递归的区别">
+<meta name="twitter:description" content="#回溯和递归的区别用一道迷宫来讲解回溯和递归的区别：  如果一个问题问迷宫有多少种方法可以出去，那么就是递归，因为它的值是确定。    如果一个问题问迷宫走这条路能不能出去，那么就是回溯，因为回溯是探索这条路能不能行得通，行不通就行不通。   递归是一种解法,它肯定会有一个确定的值，但是回溯只是一个搜索的过程，这个结果可能存在，也可能不存在。回溯是在递归过程的一个剪枝的步骤。">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180906152342793?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzI5Njk0OTYz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -154,110 +156,109 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-剑指offer" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-回溯和递归的区别" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      回溯和递归的区别
+    </h1>
+  
+
+        
+        <a href="/2019/08/09/回溯和递归的区别/" class="archive-article-date">
+  	<time datetime="2019-08-09T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-09</time>
+</a>
+        
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>剑指offer</p>
+        <p>#回溯和递归的区别<br>用一道迷宫来讲解回溯和递归的区别：</p>
 <blockquote>
-<p>替换空格类题目的延伸（降低时间复杂度）</p>
-</blockquote>
-<p>两种方法：</p>
-<blockquote>
-<p>方法一：时间复杂度为O(n<em>n)<br><br>从头到尾替换字符串的每个空格为“%20”，假设有n个空格，最后一个字符串要移动n次才能完成空格替换，因此时间复杂度为o(n</em>n)<br><br>方法二：时间复杂度为O(n)<br><br>从尾向头移动，假设有n个空格，每个字符串都是移动一次就完成空格替换，因此时间复杂度为o(n) </p>
-</blockquote>
+<p>如果一个问题问迷宫有多少种方法可以出去，那么就是递归，因为它的值是确定。</p>
 </blockquote>
 <blockquote>
-<p>单链表的难点</p>
-<p>p=p-&gt;next的理解：单链表中每个结点的存储地址是存放在其前趋结点next域中。</p>
 </blockquote>
+<p>如果一个问题问迷宫走这条路能不能出去，那么就是回溯，因为回溯是探索这条路能不能行得通，行不通就行不通。</p>
 <blockquote>
-<p>栈：先进后出</p>
-<blockquote>
-<p>##递归的原理就是栈</p>
 </blockquote>
-</blockquote>
-<blockquote>
-<p>快速排序</p>
-</blockquote>
-<pre><code>import java.util.Scanner;
-/*
- * 以第一位为基准的快速排序
- */
-public class QuickSort {
-
-public static void main(String[] args) {
+<p>递归是一种解法,它肯定会有一个确定的值，但是回溯只是一个搜索的过程，这个结果可能存在，也可能不存在。回溯是在递归过程的一个剪枝的步骤。</p>
+<a id="more"></a>
+<p>这是一道递归问题：<br><br>幸福的数字是由以下过程定义的数字：从任何正整数开始，将数字替换为数字的平方和，并重复该过程，直到数字等于1（将保留在哪里），或者循环 一个不包括在内的循环的循环中，这个过程以1结尾的数字是快乐的数字。例如19是幸运数字。给定一个数，计算是不是幸运数字。</p>
+<p><img src="https://img-blog.csdn.net/20180906152342793?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzI5Njk0OTYz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="avatar"></p>
+<pre><code>代码如下：
+import java.util.Scanner;
+public class Number_happy {
+public static void main(String args[]){
     Scanner sc=new Scanner(System.in);
-    int n=sc.nextInt();
-    int[] a=new int[n];
-    for(int i=0;i&lt;n;i++){
-        a[i]=sc.nextInt();
+    String str=sc.next();
+    Number_Is(str);
+}
+public static void Number_Is(String str){
+    int sum=0;
+    int[] a=new int[str.length()];
+    for(int i=0;i&lt;str.length();i++){
+        a[i]=str.charAt(i)-&apos;0&apos;;
+        sum=sum+a[i]*a[i];
     }
-    Quick(0,n-1,a);
-    //打印快速排序后的队列
-    for(int i=0;i&lt;n;i++){
-        System.out.print(a[i]+&quot; &quot;);
+    if((sum&gt;1&amp;&amp;sum&lt;10)||sum==0){
+        System.out.println(&quot;No!!&quot;);
     }
+    if(sum==1){
+        System.out.println(&quot;Yes!!!&quot;);
+    }
+    if(sum&gt;10){
+        Number_Is(Integer.toString(sum));
+    }
+}
+
+}</code></pre><p>递归栈的内容为：<br><br>Number_Is(19)<br><br>Number_Is(82)<br><br>Number_Is(68)<br><br>Number_Is(100)<br><br>栈中的所有内容都要计算，因为递归的现状态是由前状态的得到的</p>
+<p>这是一个回溯问题：<br><br>请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向左，向右，向上，向下移动一个格子。如果一条路径经过了矩阵中的某一个格子，则之后不能再次进入这个格子。 例如 a b c e s f c s a d e e 这样的3 X 4 矩阵中包含一条字符串”bcced”的路径，但是矩阵中不包含”abcb”路径，因为字符串的第一个字符b占据了矩阵中的第一行第二个格子之后，路径不能再次进入该格子。<br>    import java.util.Scanner;<br>    public class Path {<br>    public static void main(String args[]){<br>        Scanner sc=new Scanner(System.in);<br>        //行数<br>        int cols=sc.nextInt();<br>        //列数<br>        int rows=sc.nextInt();<br>        char[][] a=new char[cols][rows];<br>        boolean[][] visited=new boolean[cols][rows];<br>        for(int i=0;i&lt;cols;i++){<br>            for(int j=0;j&lt;rows;j++){<br>                a[i][j]=sc.next().charAt(0);<br>                visited[i][j]=false;<br>            }<br>        }</p>
+<pre><code>    //字符串路径
+    String s=sc.next();
+    int len=0;
+    boolean flag=IsPath(a,s,rows,cols,len,visited);
+
+            if(flag){
+                System.out.println(&quot;存在&quot;);
+            }else{
+            System.out.println(&quot;不存在&quot;);
+            }
 
 
 }
-public static void Quick(int start,int end,int[] a){
-    int index=sort(start,end,a);
-    if(index&gt;start&amp;&amp;index&lt;end){
-        Quick(start,index-1,a);
-        Quick(index+1,end,a);
-    }
-}
-public static int sort(int start,int end,int[] a){
-    //取第一个元素作为基准
-    int index=start;
-    int s=start;
-    int e=end;
-    int base;
-    while(start!=end){
-        //从最后一个元素向前移动，保证大于基准的元素在右边
-            while(end&gt;start&amp;&amp;start==index){
-            if(a[index]&lt;a[end])end--;
-            else{
-                base=a[index];
-                a[start]=a[end];
-                a[end]=base;
-                index=end;
-                start++;
-            }
-            }
-            //从开始的元素向前移动，保证小于基准的元素在左边
-            while(end&gt;start&amp;&amp;end==index){
-                if(a[index]&gt;a[start])start++;
-                else{
-                    base=a[index];
-                    a[end]=a[start];
-                    a[start]=base;
-                    index=start;
-                    end--;
-                }
-            }
-            if(index==s){
-                index++;
-                start++;
-                end=e;
+public static boolean IsPath(char[][] a,String s,int rows,int cols,int len,boolean[][] visited){
+    for(int col=0;col&lt;cols;col++){
+        for(int row=0;row&lt;rows;row++){
+            if(hasPath(a,s,row,col,rows,cols,len,visited)){
+                return true;
             }
         }
-    return index;
+    }
+    return false;
+
+}
+public static boolean hasPath(char[][] a,String s,int row,int col,int rows,int cols,int len,boolean[][] visited){
+    boolean flag=false;
+    if(row&gt;=0&amp;&amp;row&lt;rows&amp;&amp;col&gt;=0&amp;&amp;col&lt;cols&amp;&amp;s.charAt(len)==a[col][row]&amp;&amp;!visited[col][row]){
+        len++;
+        visited[col][row]=true;
+        if(len==s.length()){
+            return true;
+        }
+        if(hasPath(a,s,row+1,col,rows,cols,len,visited)||hasPath(a,s,row-1,col,rows,cols,len,visited)||hasPath(a,s,row,col+1,rows,cols,len,visited)||hasPath(a,s,row,col-1,rows,cols,len,visited)){
+            flag=true;
+        }else{
+            len--;
+        }
+    }
+    return flag;
 }
 
-}</code></pre><blockquote>
-<p>旋转数组的最小数字</p>
-<blockquote>
-<p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个递增排序的数组的一个旋转，输出最小元素。<br><br>解法：<br><br>测试用例：<br><br>1.数组的最后一个元素小于等于第一个元素，且中间的元素不等于第一个或最后一个元素。<br><br>使用二分查找法：将数组分为两个子数组，中间元素大于第一个元素就是递增数组，否则就是递减数组。创建三个数，max、mea，min。第一次max是数组第一个元素，mea是数组中间的元素，min是数组最后一个元素。如果mea&gt;max,则max=mea，否则min=mea，再次重新取中间的元素。依次类推，直到max和min是相邻的数时，min是最小的数。<br></p>
-</blockquote>
-<blockquote>
-<p>2.数组的最后一个元素大于第一个元素。<br><br>旋转数组和原数组相同，取第一个元素</p>
-</blockquote>
-<p>3.数组的最后一个元素等于第一个元素，且中间的元素等于第一个元素。<br><br>只能使用顺序查找</p>
-</blockquote>
+}</code></pre><p>假设每一个字符都会有4个方向，就是有4个hasPath函数，利用回溯就是列出所有的可能性，然后选出最佳的方向前行，如果没有最佳的方向，则退回前一步，重新选择方向。</p>
 
       
 
@@ -337,7 +338,7 @@ public static int sort(int start,int end,int[] a){
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/06/剑指offer/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/09/回溯和递归的区别/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -351,18 +352,18 @@ public static int sort(int start,int end,int[] a){
   
 <nav id="article-nav">
   
-    <a href="/2019/08/08/回溯和递归的区别/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/08/10/@ResponseBody和@RequestMapping的原理/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          (no title)
+          ResponseBody和RequestMapping的原理
         
       </div>
     </a>
   
   
-    <a href="/2019/08/05/有趣的算法’/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">&#39;有趣的算法</div>
+    <a href="/2019/08/08/剑指offer/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">替换空格类题目</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -401,7 +402,7 @@ public static int sort(int start,int end,int[] a){
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/2019/08/06/剑指offer/",
+  id: "http://yoursite.com/2019/08/09/回溯和递归的区别/",
   owner: 'ZeroLiu2333',
   repo: 'ZeroLiu2333.github.io',
   oauth: {

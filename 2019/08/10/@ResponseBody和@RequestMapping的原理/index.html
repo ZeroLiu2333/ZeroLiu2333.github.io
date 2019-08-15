@@ -6,18 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hexo</title>
+  <title>ResponseBody和RequestMapping的原理 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="#@ResponseBody和@RequestMapping的原理  1.@RequestMapping 是一个用来处理请求地址映射的注解，可用于类或方法上。用于类上，表示类中的所有响应请求的方法都是以该地址作为父路径；用于方法上，表示在类的父路径下追加方法上注解中的地址将会访问到该方法   2.@Responsebody 注解表示该方法的返回的结果直接写入 HTTP 响应正文（ResponseB">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/2019/08/15/@ResponseBody和@RequestMapping的原理/index.html">
+<meta property="og:title" content="ResponseBody和RequestMapping的原理">
+<meta property="og:url" content="http://yoursite.com/2019/08/10/@ResponseBody和@RequestMapping的原理/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="#@ResponseBody和@RequestMapping的原理  1.@RequestMapping 是一个用来处理请求地址映射的注解，可用于类或方法上。用于类上，表示类中的所有响应请求的方法都是以该地址作为父路径；用于方法上，表示在类的父路径下追加方法上注解中的地址将会访问到该方法   2.@Responsebody 注解表示该方法的返回的结果直接写入 HTTP 响应正文（ResponseB">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-15T14:40:36.213Z">
+<meta property="og:updated_time" content="2019-08-15T14:51:30.541Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="ResponseBody和RequestMapping的原理">
 <meta name="twitter:description" content="#@ResponseBody和@RequestMapping的原理  1.@RequestMapping 是一个用来处理请求地址映射的注解，可用于类或方法上。用于类上，表示类中的所有响应请求的方法都是以该地址作为父路径；用于方法上，表示在类的父路径下追加方法上注解中的地址将会访问到该方法   2.@Responsebody 注解表示该方法的返回的结果直接写入 HTTP 响应正文（ResponseB">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -157,6 +157,21 @@
             <article id="post-@ResponseBody和@RequestMapping的原理" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ResponseBody和RequestMapping的原理
+    </h1>
+  
+
+        
+        <a href="/2019/08/10/@ResponseBody和@RequestMapping的原理/" class="archive-article-date">
+  	<time datetime="2019-08-10T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-10</time>
+</a>
+        
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
         <p>#@ResponseBody和@RequestMapping的原理</p>
@@ -166,6 +181,7 @@
 <blockquote>
 <p>2.@Responsebody 注解表示该方法的返回的结果直接写入 HTTP 响应正文（ResponseBody）中，一般在异步获取数据时使用，通常是在使用 @RequestMapping 后，返回值通常解析为跳转路径，加上 @Responsebody 后返回结果不会被解析为跳转路径，而是直接写入HTTP 响应正文中。 </p>
 </blockquote>
+<a id="more"></a>
 <blockquote>
 <p>这两个注解经常会一起使用，但是这两个注解的使用方法一定要区分。<br><br>1）只是想获取ajax的数据，而且打印return的信息的话，就使用@Responsebody。</p>
 </blockquote>
@@ -339,7 +355,7 @@ private CodeMsg(int code,String msg){
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/15/@ResponseBody和@RequestMapping的原理/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/10/@ResponseBody和@RequestMapping的原理/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -353,9 +369,18 @@ private CodeMsg(int code,String msg){
   
 <nav id="article-nav">
   
+    <a href="/2019/08/11/抽象类和接口/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          抽象类和接口的区别以及作用
+        
+      </div>
+    </a>
   
-    <a href="/2019/08/15/抽象类和接口/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title"></div>
+  
+    <a href="/2019/08/09/回溯和递归的区别/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">回溯和递归的区别</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -394,7 +419,7 @@ private CodeMsg(int code,String msg){
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/2019/08/15/@ResponseBody和@RequestMapping的原理/",
+  id: "http://yoursite.com/2019/08/10/@ResponseBody和@RequestMapping的原理/",
   owner: 'ZeroLiu2333',
   repo: 'ZeroLiu2333.github.io',
   oauth: {
