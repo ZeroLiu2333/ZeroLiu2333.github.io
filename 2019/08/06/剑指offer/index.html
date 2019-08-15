@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | Hexo</title>
+  <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="剑指offer  替换空格类题目的延伸（降低时间复杂度）  两种方法：  方法一：时间复杂度为O(nn)从头到尾替换字符串的每个空格为“%20”，假设有n个空格，最后一个字符串要移动n次才能完成空格替换，因此时间复杂度为o(nn)方法二：时间复杂度为O(n)从尾向头移动，假设有n个空格，每个字符串都是移动一次就完成空格替换，因此时间复杂度为o(n)     单链表的难点 p=p-&amp;gt;next">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/08/06/剑指offer/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="剑指offer  替换空格类题目的延伸（降低时间复杂度）  两种方法：  方法一：时间复杂度为O(nn)从头到尾替换字符串的每个空格为“%20”，假设有n个空格，最后一个字符串要移动n次才能完成空格替换，因此时间复杂度为o(nn)方法二：时间复杂度为O(n)从尾向头移动，假设有n个空格，每个字符串都是移动一次就完成空格替换，因此时间复杂度为o(n)     单链表的难点 p=p-&amp;gt;next">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-08-07T14:48:39.109Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="剑指offer  替换空格类题目的延伸（降低时间复杂度）  两种方法：  方法一：时间复杂度为O(nn)从头到尾替换字符串的每个空格为“%20”，假设有n个空格，最后一个字符串要移动n次才能完成空格替换，因此时间复杂度为o(nn)方法二：时间复杂度为O(n)从尾向头移动，假设有n个空格，每个字符串都是移动一次就完成空格替换，因此时间复杂度为o(n)     单链表的难点 p=p-&amp;gt;next">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -150,241 +154,264 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-剑指offer" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>剑指offer</p>
+<blockquote>
+<p>替换空格类题目的延伸（降低时间复杂度）</p>
+</blockquote>
+<p>两种方法：</p>
+<blockquote>
+<p>方法一：时间复杂度为O(n<em>n)<br><br>从头到尾替换字符串的每个空格为“%20”，假设有n个空格，最后一个字符串要移动n次才能完成空格替换，因此时间复杂度为o(n</em>n)<br><br>方法二：时间复杂度为O(n)<br><br>从尾向头移动，假设有n个空格，每个字符串都是移动一次就完成空格替换，因此时间复杂度为o(n) </p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>单链表的难点</p>
+<p>p=p-&gt;next的理解：单链表中每个结点的存储地址是存放在其前趋结点next域中。</p>
+</blockquote>
+<blockquote>
+<p>栈：先进后出</p>
+<blockquote>
+<p>##递归的原理就是栈</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>快速排序</p>
+</blockquote>
+<pre><code>import java.util.Scanner;
+/*
+ * 以第一位为基准的快速排序
+ */
+public class QuickSort {
+
+public static void main(String[] args) {
+    Scanner sc=new Scanner(System.in);
+    int n=sc.nextInt();
+    int[] a=new int[n];
+    for(int i=0;i&lt;n;i++){
+        a[i]=sc.nextInt();
+    }
+    Quick(0,n-1,a);
+    //打印快速排序后的队列
+    for(int i=0;i&lt;n;i++){
+        System.out.print(a[i]+&quot; &quot;);
+    }
+
+
+}
+public static void Quick(int start,int end,int[] a){
+    int index=sort(start,end,a);
+    if(index&gt;start&amp;&amp;index&lt;end){
+        Quick(start,index-1,a);
+        Quick(index+1,end,a);
+    }
+}
+public static int sort(int start,int end,int[] a){
+    //取第一个元素作为基准
+    int index=start;
+    int s=start;
+    int e=end;
+    int base;
+    while(start!=end){
+        //从最后一个元素向前移动，保证大于基准的元素在右边
+            while(end&gt;start&amp;&amp;start==index){
+            if(a[index]&lt;a[end])end--;
+            else{
+                base=a[index];
+                a[start]=a[end];
+                a[end]=base;
+                index=end;
+                start++;
+            }
+            }
+            //从开始的元素向前移动，保证小于基准的元素在左边
+            while(end&gt;start&amp;&amp;end==index){
+                if(a[index]&gt;a[start])start++;
+                else{
+                    base=a[index];
+                    a[end]=a[start];
+                    a[start]=base;
+                    index=start;
+                    end--;
+                }
+            }
+            if(index==s){
+                index++;
+                start++;
+                end=e;
+            }
+        }
+    return index;
+}
+
+}</code></pre><blockquote>
+<p>旋转数组的最小数字</p>
+<blockquote>
+<p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个递增排序的数组的一个旋转，输出最小元素。<br><br>解法：<br><br>测试用例：<br><br>1.数组的最后一个元素小于等于第一个元素，且中间的元素不等于第一个或最后一个元素。<br><br>使用二分查找法：将数组分为两个子数组，中间元素大于第一个元素就是递增数组，否则就是递减数组。创建三个数，max、mea，min。第一次max是数组第一个元素，mea是数组中间的元素，min是数组最后一个元素。如果mea&gt;max,则max=mea，否则min=mea，再次重新取中间的元素。依次类推，直到max和min是相邻的数时，min是最小的数。<br></p>
+</blockquote>
+<blockquote>
+<p>2.数组的最后一个元素大于第一个元素。<br><br>旋转数组和原数组相同，取第一个元素</p>
+</blockquote>
+<p>3.数组的最后一个元素等于第一个元素，且中间的元素等于第一个元素。<br><br>只能使用顺序查找</p>
+</blockquote>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/15/@ResponseBody和@RequestMapping的原理/" class="archive-article-date">
-  	<time datetime="2019-08-15T14:40:36.154Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-15</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/06/剑指offer/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/15/抽象类和接口/" class="archive-article-date">
-  	<time datetime="2019-08-15T12:54:55.048Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-15</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/08/回溯和递归的区别/" class="archive-article-date">
-  	<time datetime="2019-08-08T07:48:33.276Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+<nav id="article-nav">
+  
+    <a href="/2019/08/08/回溯和递归的区别/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/08/05/有趣的算法’/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">&#39;有趣的算法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/06/剑指offer/" class="archive-article-date">
-  	<time datetime="2019-08-06T14:47:44.301Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/05/有趣的算法’/" class="archive-article-date">
-  	<time datetime="2019-08-05T14:39:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-05</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/05/有趣的算法’/">&#39;有趣的算法</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/04/日历程序/" class="archive-article-date">
-  	<time datetime="2019-08-04T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/04/日历程序/">日历程序</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/02/算法题记录/" class="archive-article-date">
-  	<time datetime="2019-08-02T06:48:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/02/算法题记录/">算法题记录</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/01/我的第一篇博客/" class="archive-article-date">
-  	<time datetime="2019-08-01T08:52:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-01</time>
-</a>
-        </div>
-    	 
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2019/08/06/剑指offer/",
+  owner: 'ZeroLiu2333',
+  repo: 'ZeroLiu2333.github.io',
+  oauth: {
+    client_id: 'da3b2bdf87dac1dcac10',
+    client_secret: 'f215039922e0a190b3ec74d012383c70b7aa24e2',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/01/我的第一篇博客/">我的第一篇博客</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/01/hello-world/" class="archive-article-date">
-  	<time datetime="2019-08-01T08:46:47.871Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/01/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -408,8 +435,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

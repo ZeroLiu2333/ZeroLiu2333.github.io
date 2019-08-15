@@ -152,6 +152,407 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-@ResponseBody和@RequestMapping的原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#@ResponseBody和@RequestMapping的原理</p>
+<blockquote>
+<p>1.@RequestMapping 是一个用来处理请求地址映射的注解，可用于类或方法上。用于类上，表示类中的所有响应请求的方法都是以该地址作为父路径；用于方法上，表示在类的父路径下追加方法上注解中的地址将会访问到该方法</p>
+</blockquote>
+<blockquote>
+<p>2.@Responsebody 注解表示该方法的返回的结果直接写入 HTTP 响应正文（ResponseBody）中，一般在异步获取数据时使用，通常是在使用 @RequestMapping 后，返回值通常解析为跳转路径，加上 @Responsebody 后返回结果不会被解析为跳转路径，而是直接写入HTTP 响应正文中。 </p>
+</blockquote>
+<blockquote>
+<p>这两个注解经常会一起使用，但是这两个注解的使用方法一定要区分。<br><br>1）只是想获取ajax的数据，而且打印return的信息的话，就使用@Responsebody。</p>
+</blockquote>
+<blockquote>
+<p>2)只是跳转页面，或者返回数据给模板，就单独用@RequestMapping</p>
+</blockquote>
+<p>Ajax是不刷新页面，也能让前后端的数据交互，因此我认为Ajax用于检验数据是否正确，例如登陆页面，注册页面等。这时候，设计一个Result类就是用于处理Ajax数据的回调，用于判断Ajax得到后端的数据是怎么样，返回一个类似于布尔值+数据的类给前端，然后再返回结果。</p>
+<blockquote>
+<p>Result类</p>
+</blockquote>
+<pre><code>public class Result&lt;T&gt; {
+private int code;
+private String msg;
+private T data;
+//success
+private Result(T data) {
+    this.code=0;
+    this.msg=&quot;success&quot;;
+    this.data=data;
+}
+//error
+private Result(CodeMsg cm) {
+    if(cm==null) {
+        return;
+    }
+
+    this.code=cm.getCode();
+    this.msg=cm.getMsg();
+}
+//成功
+public static &lt;T&gt; Result&lt;T&gt; success(T data){
+    return new Result&lt;T&gt;(data) ;
+}
+
+// 失败
+public static &lt;T&gt; Result&lt;T&gt; error(CodeMsg sm) {//CodeMsg包含了code和msg
+    return new Result&lt;T&gt;(sm);
+}
+public int getCode() {
+    return code;
+}
+public void setCode(int code) {
+    this.code = code;
+}
+public String getMsg() {
+    return msg;
+}
+public void setMsg(String msg) {
+    this.msg = msg;
+}
+public T getData() {
+    return data;
+}
+public void setData(T data) {
+    this.data = data;
+}
+
+}</code></pre><blockquote>
+<p>CodeMsg类—失败的信息</p>
+</blockquote>
+<pre><code>public class CodeMsg {
+private int code;
+private String msg;
+public static CodeMsg success=new CodeMsg(0,&quot;sucess&quot;);
+public static CodeMsg userEmpt=new CodeMsg(1,&quot;用户名或密码不正确&quot;);
+
+public int getCode() {
+    return code;
+}
+
+public void setCode(int code) {
+    this.code = code;
+}
+
+public String getMsg() {
+    return msg;
+}
+
+public void setMsg(String msg) {
+    this.msg = msg;
+}
+
+@Override
+public String toString() {
+    return &quot;CodeMsg{&quot; +
+            &quot;code=&quot; + code +
+            &quot;, msg=&apos;&quot; + msg + &apos;\&apos;&apos; +
+            &apos;}&apos;;
+}
+private CodeMsg(int code,String msg){
+    this.code=code;
+    this.msg=msg;
+
+}
+}</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/15/@ResponseBody和@RequestMapping的原理/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-抽象类和接口" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>#抽象类和接口的区别以及作用<br>在一开始的学习中，我觉得抽象类和接口就是差不多的东西，但是在开发项目的时候，参考到很多大佬的项目都是使用接口-&gt;抽象类-&gt;实例类来开发一个类或功能，我就开始思考，既然使用抽象类了，为什么不直接使用接口，还要在中间加一层抽象类，这不是增加代码量吗？后来我看书就发现，得出了以下的结论，并且解开了我的疑惑。</p>
+</blockquote>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/15/抽象类和接口/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-回溯和递归的区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#回溯和递归的区别<br>用一道迷宫来讲解回溯和递归的区别：</p>
+<blockquote>
+<p>如果一个问题问迷宫有多少种方法可以出去，那么就是递归，因为它的值是确定。</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<p>如果一个问题问迷宫走这条路能不能出去，那么就是回溯，因为回溯是探索这条路能不能行得通，行不通就行不通。</p>
+<blockquote>
+</blockquote>
+<p>递归是一种解法,它肯定会有一个确定的值，但是回溯只是一个搜索的过程，这个结果可能存在，也可能不存在。回溯是在递归过程的一个剪枝的步骤。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/08/回溯和递归的区别/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-剑指offer" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>剑指offer</p>
+<blockquote>
+<p>替换空格类题目的延伸（降低时间复杂度）</p>
+</blockquote>
+<p>两种方法：</p>
+<blockquote>
+<p>方法一：时间复杂度为O(n<em>n)<br><br>从头到尾替换字符串的每个空格为“%20”，假设有n个空格，最后一个字符串要移动n次才能完成空格替换，因此时间复杂度为o(n</em>n)<br><br>方法二：时间复杂度为O(n)<br><br>从尾向头移动，假设有n个空格，每个字符串都是移动一次就完成空格替换，因此时间复杂度为o(n) </p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>单链表的难点</p>
+<p>p=p-&gt;next的理解：单链表中每个结点的存储地址是存放在其前趋结点next域中。</p>
+</blockquote>
+<blockquote>
+<p>栈：先进后出</p>
+<blockquote>
+<p>##递归的原理就是栈</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>快速排序</p>
+</blockquote>
+<pre><code>import java.util.Scanner;
+/*
+ * 以第一位为基准的快速排序
+ */
+public class QuickSort {
+
+public static void main(String[] args) {
+    Scanner sc=new Scanner(System.in);
+    int n=sc.nextInt();
+    int[] a=new int[n];
+    for(int i=0;i&lt;n;i++){
+        a[i]=sc.nextInt();
+    }
+    Quick(0,n-1,a);
+    //打印快速排序后的队列
+    for(int i=0;i&lt;n;i++){
+        System.out.print(a[i]+&quot; &quot;);
+    }
+
+
+}
+public static void Quick(int start,int end,int[] a){
+    int index=sort(start,end,a);
+    if(index&gt;start&amp;&amp;index&lt;end){
+        Quick(start,index-1,a);
+        Quick(index+1,end,a);
+    }
+}
+public static int sort(int start,int end,int[] a){
+    //取第一个元素作为基准
+    int index=start;
+    int s=start;
+    int e=end;
+    int base;
+    while(start!=end){
+        //从最后一个元素向前移动，保证大于基准的元素在右边
+            while(end&gt;start&amp;&amp;start==index){
+            if(a[index]&lt;a[end])end--;
+            else{
+                base=a[index];
+                a[start]=a[end];
+                a[end]=base;
+                index=end;
+                start++;
+            }
+            }
+            //从开始的元素向前移动，保证小于基准的元素在左边
+            while(end&gt;start&amp;&amp;end==index){
+                if(a[index]&gt;a[start])start++;
+                else{
+                    base=a[index];
+                    a[end]=a[start];
+                    a[start]=base;
+                    index=start;
+                    end--;
+                }
+            }
+            if(index==s){
+                index++;
+                start++;
+                end=e;
+            }
+        }
+    return index;
+}
+
+}</code></pre><blockquote>
+<p>旋转数组的最小数字</p>
+<blockquote>
+<p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个递增排序的数组的一个旋转，输出最小元素。<br><br>解法：<br><br>测试用例：<br><br>1.数组的最后一个元素小于等于第一个元素，且中间的元素不等于第一个或最后一个元素。<br><br>使用二分查找法：将数组分为两个子数组，中间元素大于第一个元素就是递增数组，否则就是递减数组。创建三个数，max、mea，min。第一次max是数组第一个元素，mea是数组中间的元素，min是数组最后一个元素。如果mea&gt;max,则max=mea，否则min=mea，再次重新取中间的元素。依次类推，直到max和min是相邻的数时，min是最小的数。<br></p>
+</blockquote>
+<blockquote>
+<p>2.数组的最后一个元素大于第一个元素。<br><br>旋转数组和原数组相同，取第一个元素</p>
+</blockquote>
+<p>3.数组的最后一个元素等于第一个元素，且中间的元素等于第一个元素。<br><br>只能使用顺序查找</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/06/剑指offer/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-有趣的算法’" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
