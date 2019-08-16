@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019 | Hexo</title>
+  <title>重写WebMvcConfigurerAdapter | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2019/index.html">
+  <meta name="description" content="在开发的时候，很多功能都会使用用户信息，并且检测用户是否登录  如果在之前，我们都是使用session存储用户信息，然后直接使用request.getsession().getAttribute(&amp;quot;user&amp;quot;)但是我们使用分布式session后，我们使用cookie存储用户的信息，cookie获取用户信息的话，我们需要检查cookie_id有没有存在，没有的话就重新登录，并且">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重写WebMvcConfigurerAdapter">
+<meta property="og:url" content="http://yoursite.com/2019/08/12/重写WebMvcConfigurerAdapter/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在开发的时候，很多功能都会使用用户信息，并且检测用户是否登录  如果在之前，我们都是使用session存储用户信息，然后直接使用request.getsession().getAttribute(&amp;quot;user&amp;quot;)但是我们使用分布式session后，我们使用cookie存储用户的信息，cookie获取用户信息的话，我们需要检查cookie_id有没有存在，没有的话就重新登录，并且">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-08-16T12:19:12.811Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="重写WebMvcConfigurerAdapter">
+<meta name="twitter:description" content="在开发的时候，很多功能都会使用用户信息，并且检测用户是否登录  如果在之前，我们都是使用session存储用户信息，然后直接使用request.getsession().getAttribute(&amp;quot;user&amp;quot;)但是我们使用分布式session后，我们使用cookie存储用户的信息，cookie获取用户信息的话，我们需要检查cookie_id有没有存在，没有的话就重新登录，并且">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -150,295 +154,248 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-重写WebMvcConfigurerAdapter" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/14/分布式session/" class="archive-article-date">
-  	<time datetime="2019-08-14T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-14</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/14/分布式session/">分布式session</a>
+    <h1 class="article-title" itemprop="name">
+      重写WebMvcConfigurerAdapter
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/12/重写WebMvcConfigurerAdapter/" class="archive-article-date">
+        
+        <a href="/2019/08/12/重写WebMvcConfigurerAdapter/" class="archive-article-date">
   	<time datetime="2019-08-12T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-12</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/12/重写WebMvcConfigurerAdapter/">重写WebMvcConfigurerAdapter</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>在开发的时候，很多功能都会使用用户信息，并且检测用户是否登录</p>
+</blockquote>
+<p>如果在之前，我们都是使用session存储用户信息，然后直接使用<br><code>request.getsession().getAttribute(&quot;user&quot;)</code><br>但是我们使用分布式session后，我们使用cookie存储用户的信息，cookie获取用户信息的话，我们需要检查cookie_id有没有存在，没有的话就重新登录，并且需要通过cookie_id从redis获取用户信息。<br></p>
+<blockquote>
+</blockquote>
+<p>如果每个使用到用户信息都使用这个代码，代码量就会增多，因此我们可以重写@Controller中的WebMvcConfigurerAdapter的addArgumentResolvers方法，这个方法是检查@Controller层的方法里面的参数应该注入什么内容，例如HttpServletResponse和Model都是从这个方法注入信息的。<br></p>
+<blockquote>
+</blockquote>
+<p>因此我们就重写addArgumentResolvers方法，为一个类写入检查cookie并提取用户信息的步骤，然后每次访问到@RequestMapping注解的方法时，就会检测这个类，做下列操作。</p>
+<p>//WebConfig类</p>
+<pre><code>@Configuration
+public class WebConfig extends WebMvcConfigurerAdapter {
+@Autowired
+UserArgumentResolver userArgumentResolver;
 
-        <div class="article-info info-on-right">
-          
-          
+@Override
+public void addArgumentResolvers(List&lt;HandlerMethodArgumentResolver&gt; argumentResolvers){
+    argumentResolvers.add(userArgumentResolver);
+}
 
+}</code></pre><p>//UserArgumentResolver类</p>
+<pre><code>@Service
+public class UserArgumentResolver implements HandlerMethodArgumentResolver {
+@Autowired
+SelectUserService selectUserService;
+/*
+获取参数类型，如果类型是user，就进行下列函数的处理，否则不做处理
+ */
+@Override
+public boolean supportsParameter(MethodParameter methodParameter) {
+    Class&lt;?&gt; clazz=methodParameter.getParameterType();
+    return clazz==user.class;
+}
+
+@Override
+public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
+    //为了获取cookie的token内容，需要request
+    HttpServletRequest request=nativeWebRequest.getNativeRequest(HttpServletRequest.class);
+    HttpServletResponse response=nativeWebRequest.getNativeResponse(HttpServletResponse.class);
+    //request.getParameter(SelectUserService.COOKIE1_NAME_TOKEN)
+    /*
+    PC端-客户端取cookie的值
+    一个客户端可能有很多个cookie，因此要遍历寻找需要的cookie
+     */
+    String cookieToken=getCookieValue(request,SelectUserService.COOKIE1_NAME_TOKEN);
+    if(StringUtils.isEmpty(cookieToken)){
+        return &quot;index&quot;;
+    }else {
+        user user = selectUserService.getByToken(cookieToken);
+        return user;
+    }
+}
+public String getCookieValue(HttpServletRequest request,String cookiename){
+    Cookie[] cookies=request.getCookies();
+    for(Cookie cookie:cookies){
+        if(cookie.getName().equals(cookiename)){
+            return cookie.getValue();
+        }
+    }
+    return null;
+}
+}</code></pre><blockquote>
+<p>WebMvcConfigurerAdapter</p>
+</blockquote>
+<p>configureContentNegotation:将对象当成json输出</p>
+<blockquote>
+</blockquote>
+<p>addArgumentResolvers//给response和model赋值</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/12/重写WebMvcConfigurerAdapter/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/11/抽象类和接口/" class="archive-article-date">
-  	<time datetime="2019-08-11T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-11</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2019/08/14/分布式session/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          分布式session
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/08/11/抽象类和接口/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">抽象类和接口的区别以及作用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/11/抽象类和接口/">抽象类和接口的区别以及作用</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/10/@ResponseBody和@RequestMapping的原理/" class="archive-article-date">
-  	<time datetime="2019-08-10T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/10/@ResponseBody和@RequestMapping的原理/">ResponseBody和RequestMapping的原理</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/09/回溯和递归的区别/" class="archive-article-date">
-  	<time datetime="2019-08-09T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/09/回溯和递归的区别/">回溯和递归的区别</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/08/剑指offer/" class="archive-article-date">
-  	<time datetime="2019-08-08T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/08/剑指offer/">替换空格类题目</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/05/有趣的算法’/" class="archive-article-date">
-  	<time datetime="2019-08-05T14:39:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/05/有趣的算法’/">&#39;有趣的算法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/04/日历程序/" class="archive-article-date">
-  	<time datetime="2019-08-04T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/04/日历程序/">日历程序</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/02/算法题记录/" class="archive-article-date">
-  	<time datetime="2019-08-02T06:48:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/02/算法题记录/">算法题记录</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/01/我的第一篇博客/" class="archive-article-date">
-  	<time datetime="2019-08-01T08:52:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/01/我的第一篇博客/">我的第一篇博客</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2019/page/2/">2</a><a class="extend next" rel="next" href="/archives/2019/page/2/">Next &raquo;</a>
-    </nav>
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2019/08/12/重写WebMvcConfigurerAdapter/",
+  owner: 'ZeroLiu2333',
+  repo: 'ZeroLiu2333.github.io',
+  oauth: {
+    client_id: 'da3b2bdf87dac1dcac10',
+    client_secret: 'f215039922e0a190b3ec74d012383c70b7aa24e2',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -463,8 +420,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

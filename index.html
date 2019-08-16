@@ -152,6 +152,221 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-分布式session" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/14/分布式session/">分布式session</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/14/分布式session/" class="archive-article-date">
+  	<time datetime="2019-08-14T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#用redis+cookie替代原生的session同步–分布式session的方法</p>
+<blockquote>
+<p>1.为什么需要分布式session<br><br>在开发的过程中，不是只要一台服务器在工作，而是有多台服务器协调工作，那么如果从一台服务器到另一台服务器的时候，用户的session也要传递到其他的服务器中，不然就会造成用户信息丢失。</p>
+</blockquote>
+<p>2.原生session同步：性能问题，实现很复杂</p>
+<blockquote>
+<p>3.用redis+cookie替代原生的session同步:<br><br>登陆成功之后生成session id标识用户，写入cookie中，传递到客户端，客户端在随后的访问中上传token，再从token中获取用户信息</p>
+<p>将token映射成用户<br><br>将数据缓存到redis中，不存储在服务器中<br></p>
+</blockquote>
+<pre><code>String token= UUIDUtils.uid();//生成session id
+public void addCookie(String token, HttpServletResponse response, user user){
+    /*
+    1.将token写到cookie中，传递给客户端，标识用户信息。
+    2.将token对应用户的信息保存在redis缓存中。
+     */
+    redisService.set(SelectUserKey.token,token,user);
+    Cookie cookie=new Cookie(COOKIE1_NAME_TOKEN,token);
+    //有效期
+    cookie.setMaxAge(SelectUserKey.token.expireSeconds);
+    cookie.setPath(&quot;/&quot;);
+    response.addCookie(cookie);
+
+}</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/14/分布式session/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-重写WebMvcConfigurerAdapter" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/12/重写WebMvcConfigurerAdapter/">重写WebMvcConfigurerAdapter</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/12/重写WebMvcConfigurerAdapter/" class="archive-article-date">
+  	<time datetime="2019-08-12T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>在开发的时候，很多功能都会使用用户信息，并且检测用户是否登录</p>
+</blockquote>
+<p>如果在之前，我们都是使用session存储用户信息，然后直接使用<br><code>request.getsession().getAttribute(&quot;user&quot;)</code><br>但是我们使用分布式session后，我们使用cookie存储用户的信息，cookie获取用户信息的话，我们需要检查cookie_id有没有存在，没有的话就重新登录，并且需要通过cookie_id从redis获取用户信息。<br></p>
+<blockquote>
+</blockquote>
+<p>如果每个使用到用户信息都使用这个代码，代码量就会增多，因此我们可以重写@Controller中的WebMvcConfigurerAdapter的addArgumentResolvers方法，这个方法是检查@Controller层的方法里面的参数应该注入什么内容，例如HttpServletResponse和Model都是从这个方法注入信息的。<br></p>
+<blockquote>
+</blockquote>
+<p>因此我们就重写addArgumentResolvers方法，为一个类写入检查cookie并提取用户信息的步骤，然后每次访问到@RequestMapping注解的方法时，就会检测这个类，做下列操作。</p>
+<p>//WebConfig类</p>
+<pre><code>@Configuration
+public class WebConfig extends WebMvcConfigurerAdapter {
+@Autowired
+UserArgumentResolver userArgumentResolver;
+
+@Override
+public void addArgumentResolvers(List&lt;HandlerMethodArgumentResolver&gt; argumentResolvers){
+    argumentResolvers.add(userArgumentResolver);
+}
+
+}</code></pre><p>//UserArgumentResolver类</p>
+<pre><code>@Service
+public class UserArgumentResolver implements HandlerMethodArgumentResolver {
+@Autowired
+SelectUserService selectUserService;
+/*
+获取参数类型，如果类型是user，就进行下列函数的处理，否则不做处理
+ */
+@Override
+public boolean supportsParameter(MethodParameter methodParameter) {
+    Class&lt;?&gt; clazz=methodParameter.getParameterType();
+    return clazz==user.class;
+}
+
+@Override
+public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
+    //为了获取cookie的token内容，需要request
+    HttpServletRequest request=nativeWebRequest.getNativeRequest(HttpServletRequest.class);
+    HttpServletResponse response=nativeWebRequest.getNativeResponse(HttpServletResponse.class);
+    //request.getParameter(SelectUserService.COOKIE1_NAME_TOKEN)
+    /*
+    PC端-客户端取cookie的值
+    一个客户端可能有很多个cookie，因此要遍历寻找需要的cookie
+     */
+    String cookieToken=getCookieValue(request,SelectUserService.COOKIE1_NAME_TOKEN);
+    if(StringUtils.isEmpty(cookieToken)){
+        return &quot;index&quot;;
+    }else {
+        user user = selectUserService.getByToken(cookieToken);
+        return user;
+    }
+}
+public String getCookieValue(HttpServletRequest request,String cookiename){
+    Cookie[] cookies=request.getCookies();
+    for(Cookie cookie:cookies){
+        if(cookie.getName().equals(cookiename)){
+            return cookie.getValue();
+        }
+    }
+    return null;
+}
+}</code></pre><blockquote>
+<p>WebMvcConfigurerAdapter</p>
+</blockquote>
+<p>configureContentNegotation:将对象当成json输出</p>
+<blockquote>
+</blockquote>
+<p>addArgumentResolvers//给response和model赋值</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/12/重写WebMvcConfigurerAdapter/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-抽象类和接口" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -782,81 +997,10 @@ public static int sort(int start,int end,int[] a){
 
 
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/01/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/01/hello-world/" class="archive-article-date">
-  	<time datetime="2019-08-01T08:46:47.871Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/01/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
