@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="#用redis+cookie替代原生的session同步–分布式session的方法  1.为什么需要分布式session在开发的过程中，不是只要一台服务器在工作，而是有多台服务器协调工作，那么如果从一台服务器到另一台服务器的时候，用户的session也要传递到其他的服务器中，不然就会造成用户信息丢失。  2.原生session同步：性能问题，实现很复杂  3.用redis+cookie替代原生的">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-16T12:18:11.441Z">
+<meta property="og:updated_time" content="2019-08-20T07:26:41.653Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式session">
 <meta name="twitter:description" content="#用redis+cookie替代原生的session同步–分布式session的方法  1.为什么需要分布式session在开发的过程中，不是只要一台服务器在工作，而是有多台服务器协调工作，那么如果从一台服务器到另一台服务器的时候，用户的session也要传递到其他的服务器中，不然就会造成用户信息丢失。  2.原生session同步：性能问题，实现很复杂  3.用redis+cookie替代原生的">
@@ -181,6 +181,9 @@
 <p>2.原生session同步：性能问题，实现很复杂</p>
 <blockquote>
 <p>3.用redis+cookie替代原生的session同步:<br><br>登陆成功之后生成session id标识用户，写入cookie中，传递到客户端，客户端在随后的访问中上传token，再从token中获取用户信息</p>
+</blockquote>
+<a id="more"></a>
+<blockquote>
 <p>将token映射成用户<br><br>将数据缓存到redis中，不存储在服务器中<br></p>
 </blockquote>
 <pre><code>String token= UUIDUtils.uid();//生成session id
@@ -289,18 +292,18 @@ public void addCookie(String token, HttpServletResponse response, user user){
   
 <nav id="article-nav">
   
-    <a href="/2019/08/17/秒杀优化/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/08/14/RabbitMQ的四种交换机模式/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          秒杀优化
+          RabbitMQ的四种交换机模式
         
       </div>
     </a>
   
   
-    <a href="/2019/08/14/RabbitMQ的四种交换机模式/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">RabbitMQ的四种交换机模式</div>
+    <a href="/2019/08/13/将本地项目发送到远端git时出现的问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">将本地项目发送到远端git时出现的问题</div>
       <i class="icon-circle-right"></i>
     </a>
   
