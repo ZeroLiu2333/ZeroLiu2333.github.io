@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>分布式session | Hexo</title>
+  <title>freemark的时间显示问题 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#用redis+cookie替代原生的session同步–分布式session的方法  1.为什么需要分布式session在开发的过程中，不是只要一台服务器在工作，而是有多台服务器协调工作，那么如果从一台服务器到另一台服务器的时候，用户的session也要传递到其他的服务器中，不然就会造成用户信息丢失。  2.原生session同步：性能问题，实现很复杂  3.用redis+cookie替代原生的">
+  <meta name="description" content="#freemark的时间显示问题—java.util.Date和java.sql.Date  我将数据库中datetime格式的数据在Java中取出时，发现了java.util.Date和java.sql.Date的区别  1.如果使用java.util.Date，则输出的数据格式是 Thu Aug 01 12:00:00 CST 2019而java.sql.Date输出的数据是 2019-08-">
 <meta property="og:type" content="article">
-<meta property="og:title" content="分布式session">
-<meta property="og:url" content="http://yoursite.com/2019/08/14/分布式session/index.html">
+<meta property="og:title" content="freemark的时间显示问题">
+<meta property="og:url" content="http://yoursite.com/2019/08/12/freemark/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="#用redis+cookie替代原生的session同步–分布式session的方法  1.为什么需要分布式session在开发的过程中，不是只要一台服务器在工作，而是有多台服务器协调工作，那么如果从一台服务器到另一台服务器的时候，用户的session也要传递到其他的服务器中，不然就会造成用户信息丢失。  2.原生session同步：性能问题，实现很复杂  3.用redis+cookie替代原生的">
+<meta property="og:description" content="#freemark的时间显示问题—java.util.Date和java.sql.Date  我将数据库中datetime格式的数据在Java中取出时，发现了java.util.Date和java.sql.Date的区别  1.如果使用java.util.Date，则输出的数据格式是 Thu Aug 01 12:00:00 CST 2019而java.sql.Date输出的数据是 2019-08-">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-16T12:18:11.441Z">
+<meta property="og:updated_time" content="2019-08-20T07:15:01.308Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分布式session">
-<meta name="twitter:description" content="#用redis+cookie替代原生的session同步–分布式session的方法  1.为什么需要分布式session在开发的过程中，不是只要一台服务器在工作，而是有多台服务器协调工作，那么如果从一台服务器到另一台服务器的时候，用户的session也要传递到其他的服务器中，不然就会造成用户信息丢失。  2.原生session同步：性能问题，实现很复杂  3.用redis+cookie替代原生的">
+<meta name="twitter:title" content="freemark的时间显示问题">
+<meta name="twitter:description" content="#freemark的时间显示问题—java.util.Date和java.sql.Date  我将数据库中datetime格式的数据在Java中取出时，发现了java.util.Date和java.sql.Date的区别  1.如果使用java.util.Date，则输出的数据格式是 Thu Aug 01 12:00:00 CST 2019而java.sql.Date输出的数据是 2019-08-">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -154,49 +154,37 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-分布式session" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-freemark" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      分布式session
+      freemark的时间显示问题
     </h1>
   
 
         
-        <a href="/2019/08/14/分布式session/" class="archive-article-date">
-  	<time datetime="2019-08-14T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-14</time>
+        <a href="/2019/08/12/freemark/" class="archive-article-date">
+  	<time datetime="2019-08-12T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#用redis+cookie替代原生的session同步–分布式session的方法</p>
+        <p>#freemark的时间显示问题—java.util.Date和java.sql.Date</p>
 <blockquote>
-<p>1.为什么需要分布式session<br><br>在开发的过程中，不是只要一台服务器在工作，而是有多台服务器协调工作，那么如果从一台服务器到另一台服务器的时候，用户的session也要传递到其他的服务器中，不然就会造成用户信息丢失。</p>
+<p>我将数据库中datetime格式的数据在Java中取出时，发现了java.util.Date和java.sql.Date的区别</p>
 </blockquote>
-<p>2.原生session同步：性能问题，实现很复杂</p>
-<blockquote>
-<p>3.用redis+cookie替代原生的session同步:<br><br>登陆成功之后生成session id标识用户，写入cookie中，传递到客户端，客户端在随后的访问中上传token，再从token中获取用户信息</p>
-<p>将token映射成用户<br><br>将数据缓存到redis中，不存储在服务器中<br></p>
-</blockquote>
-<pre><code>String token= UUIDUtils.uid();//生成session id
-public void addCookie(String token, HttpServletResponse response, user user){
-    /*
-    1.将token写到cookie中，传递给客户端，标识用户信息。
-    2.将token对应用户的信息保存在redis缓存中。
-     */
-    redisService.set(SelectUserKey.token,token,user);
-    Cookie cookie=new Cookie(COOKIE1_NAME_TOKEN,token);
-    //有效期
-    cookie.setMaxAge(SelectUserKey.token.expireSeconds);
-    cookie.setPath(&quot;/&quot;);
-    response.addCookie(cookie);
-
-}</code></pre>
+<p>1.如果使用java.util.Date，则输出的数据格式是</p>
+<pre><code>Thu Aug 01 12:00:00 CST 2019</code></pre><p>而java.sql.Date输出的数据是</p>
+<pre><code>2019-08-17</code></pre><p>我是在freemark上使用时间具体到分秒，因此只要使用java.util.Date格式的数据，然后在模板上转化一下数据格式，在前端的显示就没有问题。</p>
+<pre><code>${(course1.start_date?string(&apos;yyyy.MM.dd HH:mm:ss&apos;))!}</code></pre><p>但是如果要输出到数据库的话，使用java.util.Date是肯定出错的，因为格式不同，而且这个日期格式也不能在sql上使用，但是如果使用java.sql.Date也会出错，因为这个数据格式没有精确到分秒，因此如果要输出数据到数据库的话，就要转时间的格式。</p>
+<p>百度方法：<br><br>我们需要使用到java.sql.Timestamp这个类来进行转换：</p>
+<pre><code>Timestamp t = new Timestamp(user.getBirthay().getTime());
+ps.setTimestamp(3, t);</code></pre>
       
 
       
@@ -275,7 +263,7 @@ public void addCookie(String token, HttpServletResponse response, user user){
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/14/分布式session/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/12/freemark/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -289,18 +277,18 @@ public void addCookie(String token, HttpServletResponse response, user user){
   
 <nav id="article-nav">
   
-    <a href="/2019/08/17/秒杀优化/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/08/13/将本地项目发送到远端git时出现的问题/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          秒杀优化
+          将本地项目发送到远端git时出现的问题
         
       </div>
     </a>
   
   
-    <a href="/2019/08/14/RabbitMQ的四种交换机模式/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">RabbitMQ的四种交换机模式</div>
+    <a href="/2019/08/12/list/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">List&lt;&gt;和List的区别</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -339,7 +327,7 @@ public void addCookie(String token, HttpServletResponse response, user user){
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/2019/08/14/分布式session/",
+  id: "http://yoursite.com/2019/08/12/freemark/",
   owner: 'ZeroLiu2333',
   repo: 'ZeroLiu2333.github.io',
   oauth: {

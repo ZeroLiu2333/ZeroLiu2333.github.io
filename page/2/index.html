@@ -152,6 +152,436 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-回溯和递归的区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/09/回溯和递归的区别/">回溯和递归的区别</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/09/回溯和递归的区别/" class="archive-article-date">
+  	<time datetime="2019-08-09T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#回溯和递归的区别<br>用一道迷宫来讲解回溯和递归的区别：</p>
+<blockquote>
+<p>如果一个问题问迷宫有多少种方法可以出去，那么就是递归，因为它的值是确定。</p>
+</blockquote>
+<blockquote>
+</blockquote>
+<p>如果一个问题问迷宫走这条路能不能出去，那么就是回溯，因为回溯是探索这条路能不能行得通，行不通就行不通。</p>
+<blockquote>
+</blockquote>
+<p>递归是一种解法,它肯定会有一个确定的值，但是回溯只是一个搜索的过程，这个结果可能存在，也可能不存在。回溯是在递归过程的一个剪枝的步骤。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/09/回溯和递归的区别/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-剑指offer" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/08/剑指offer/">替换空格类题目</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/08/剑指offer/" class="archive-article-date">
+  	<time datetime="2019-08-08T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>剑指offer</p>
+<blockquote>
+<p>替换空格类题目的延伸（降低时间复杂度）</p>
+</blockquote>
+<p>两种方法：</p>
+<blockquote>
+<p>方法一：时间复杂度为O(n<em>n)<br><br>从头到尾替换字符串的每个空格为“%20”，假设有n个空格，最后一个字符串要移动n次才能完成空格替换，因此时间复杂度为o(n</em>n)<br><br>方法二：时间复杂度为O(n)<br><br>从尾向头移动，假设有n个空格，每个字符串都是移动一次就完成空格替换，因此时间复杂度为o(n) </p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>单链表的难点</p>
+<p>p=p-&gt;next的理解：单链表中每个结点的存储地址是存放在其前趋结点next域中。</p>
+</blockquote>
+<blockquote>
+<p>栈：先进后出</p>
+<blockquote>
+<p>##递归的原理就是栈</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>快速排序</p>
+</blockquote>
+<pre><code>import java.util.Scanner;
+/*
+ * 以第一位为基准的快速排序
+ */
+public class QuickSort {
+
+public static void main(String[] args) {
+    Scanner sc=new Scanner(System.in);
+    int n=sc.nextInt();
+    int[] a=new int[n];
+    for(int i=0;i&lt;n;i++){
+        a[i]=sc.nextInt();
+    }
+    Quick(0,n-1,a);
+    //打印快速排序后的队列
+    for(int i=0;i&lt;n;i++){
+        System.out.print(a[i]+&quot; &quot;);
+    }
+
+
+}
+public static void Quick(int start,int end,int[] a){
+    int index=sort(start,end,a);
+    if(index&gt;start&amp;&amp;index&lt;end){
+        Quick(start,index-1,a);
+        Quick(index+1,end,a);
+    }
+}
+public static int sort(int start,int end,int[] a){
+    //取第一个元素作为基准
+    int index=start;
+    int s=start;
+    int e=end;
+    int base;
+    while(start!=end){
+        //从最后一个元素向前移动，保证大于基准的元素在右边
+            while(end&gt;start&amp;&amp;start==index){
+            if(a[index]&lt;a[end])end--;
+            else{
+                base=a[index];
+                a[start]=a[end];
+                a[end]=base;
+                index=end;
+                start++;
+            }
+            }
+            //从开始的元素向前移动，保证小于基准的元素在左边
+            while(end&gt;start&amp;&amp;end==index){
+                if(a[index]&gt;a[start])start++;
+                else{
+                    base=a[index];
+                    a[end]=a[start];
+                    a[start]=base;
+                    index=start;
+                    end--;
+                }
+            }
+            if(index==s){
+                index++;
+                start++;
+                end=e;
+            }
+        }
+    return index;
+}
+
+}</code></pre><blockquote>
+<p>旋转数组的最小数字</p>
+<blockquote>
+<p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个递增排序的数组的一个旋转，输出最小元素。<br><br>解法：<br><br>测试用例：<br><br>1.数组的最后一个元素小于等于第一个元素，且中间的元素不等于第一个或最后一个元素。<br><br>使用二分查找法：将数组分为两个子数组，中间元素大于第一个元素就是递增数组，否则就是递减数组。创建三个数，max、mea，min。第一次max是数组第一个元素，mea是数组中间的元素，min是数组最后一个元素。如果mea&gt;max,则max=mea，否则min=mea，再次重新取中间的元素。依次类推，直到max和min是相邻的数时，min是最小的数。<br></p>
+</blockquote>
+<blockquote>
+<p>2.数组的最后一个元素大于第一个元素。<br><br>旋转数组和原数组相同，取第一个元素</p>
+</blockquote>
+<p>3.数组的最后一个元素等于第一个元素，且中间的元素等于第一个元素。<br><br>只能使用顺序查找</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/08/剑指offer/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-有趣的算法’" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/05/有趣的算法’/">&#39;有趣的算法</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/05/有趣的算法’/" class="archive-article-date">
+  	<time datetime="2019-08-05T14:39:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#网易算法记录</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/05/有趣的算法’/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-日历程序" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/04/日历程序/">日历程序</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/04/日历程序/" class="archive-article-date">
+  	<time datetime="2019-08-04T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#使用LocalDate写日历</p>
+<blockquote>
+<p>显示当前页的日历<br><br>方法难点：minusDay(int day);<br>方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1</p>
+</blockquote>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/04/日历程序/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-算法题记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/02/算法题记录/">算法题记录</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/02/算法题记录/" class="archive-article-date">
+  	<time datetime="2019-08-02T06:48:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#剑锋offer（Java）</p>
+<p>#持续更新</p>
+<blockquote>
+<p>1.在一个字符串(0&lt;=字符串长度&lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返回它的位置, 如果没有则返回 -1（需要区分大小写）.</p>
+</blockquote>
+<p>思路：控制时间和空间的效率，使用哈希表（key-value关系）</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/02/算法题记录/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

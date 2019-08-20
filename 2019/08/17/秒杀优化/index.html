@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>我的第一篇博客 | Hexo</title>
+  <title>秒杀优化 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="##第一章内容  ##参考文章 www.aaa.cn">
+  <meta name="description" content="##秒杀接口优化：减少数据库访问（异步下单）1.系统初始化，把商品库存数量加载到redis2.收到请求，redis减库存，库存不足，直接返回，否则进入33.请求入队，立即返回排队中（异步下单）4.请求出队，减少库存5.客户端轮询，是否秒杀成功 ##异步任务 为什么要异步任务呢，因此抢课之后，就会有插入已选课表和更新数据、查询数据库等操作，这样抢课程序就会很慢。由于抢课成功后会进入原课程列表，我们可">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我的第一篇博客">
-<meta property="og:url" content="http://yoursite.com/2019/08/01/我的第一篇博客/index.html">
+<meta property="og:title" content="秒杀优化">
+<meta property="og:url" content="http://yoursite.com/2019/08/17/秒杀优化/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="##第一章内容  ##参考文章 www.aaa.cn">
+<meta property="og:description" content="##秒杀接口优化：减少数据库访问（异步下单）1.系统初始化，把商品库存数量加载到redis2.收到请求，redis减库存，库存不足，直接返回，否则进入33.请求入队，立即返回排队中（异步下单）4.请求出队，减少库存5.客户端轮询，是否秒杀成功 ##异步任务 为什么要异步任务呢，因此抢课之后，就会有插入已选课表和更新数据、查询数据库等操作，这样抢课程序就会很慢。由于抢课成功后会进入原课程列表，我们可">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-01T08:55:32.807Z">
+<meta property="og:updated_time" content="2019-08-20T07:19:31.909Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我的第一篇博客">
-<meta name="twitter:description" content="##第一章内容  ##参考文章 www.aaa.cn">
+<meta name="twitter:title" content="秒杀优化">
+<meta name="twitter:description" content="##秒杀接口优化：减少数据库访问（异步下单）1.系统初始化，把商品库存数量加载到redis2.收到请求，redis减库存，库存不足，直接返回，否则进入33.请求入队，立即返回排队中（异步下单）4.请求出队，减少库存5.客户端轮询，是否秒杀成功 ##异步任务 为什么要异步任务呢，因此抢课之后，就会有插入已选课表和更新数据、查询数据库等操作，这样抢课程序就会很慢。由于抢课成功后会进入原课程列表，我们可">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -154,30 +154,34 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-我的第一篇博客" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-秒杀优化" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      我的第一篇博客
+      秒杀优化
     </h1>
   
 
         
-        <a href="/2019/08/01/我的第一篇博客/" class="archive-article-date">
-  	<time datetime="2019-08-01T08:52:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-01</time>
+        <a href="/2019/08/17/秒杀优化/" class="archive-article-date">
+  	<time datetime="2019-08-17T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-17</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##第一章<br>内容</p>
-<hr>
-<p>##参考文章</p>
-<p><a href="http://www.aaa.cn" target="_blank" rel="noopener">www.aaa.cn</a></p>
+        <p>##秒杀接口优化：<br>减少数据库访问（异步下单）<br>1.系统初始化，把商品库存数量加载到redis<br>2.收到请求，redis减库存，库存不足，直接返回，否则进入3<br>3.请求入队，立即返回排队中<br>（异步下单）<br>4.请求出队，减少库存<br>5.客户端轮询，是否秒杀成功</p>
+<p>##异步任务</p>
+<p>为什么要异步任务呢，因此抢课之后，就会有插入已选课表和更新数据、查询数据库等操作，这样抢课程序就会很慢。<br><br>由于抢课成功后会进入原课程列表，我们可以做一个异步任务。异步队列任务一般都是使用消息中间件实现。<br>因为在抢课后我们会更新数据库，因此我们可以将查询redis和查询数据库不同时进行。<br><br>为什么需要轮询呢，因为我们要把已经进入队列的数据处理的结果返回，再查询数据库更新课程页面。轮询就是先把结果输出到页面，再更新数据库。</p>
+<p>轮询第一个方法：<br>insert:是否成功进入队列<br>队列：得到select，user，cid的信息，并存放到到秒杀信息中，传送到下一个进行秒杀事务的方法。<br>在秒杀事务中减少库存，标记内存标记。</p>
+<p>轮询第二个方法：<br>插入选课信息到数据库和缓存，更改课程表数据。</p>
+<p>##页面优化技术</p>
+<p>页面缓存+URL缓存+对象缓存—减少数据库的访问</p>
+<p>页面静态化：将页面缓存在客户端，减少流量访问—页面全部都是html，通过ajax或js获取数据，渲染页面：即使做了页面缓存，但是客户端还是要从服务端下载页面数据；前后端分离<br>页面缓存有效期比较短</p>
 
       
 
@@ -257,7 +261,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/01/我的第一篇博客/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/17/秒杀优化/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -271,18 +275,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/08/02/算法题记录/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          算法题记录
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/08/01/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2019/08/14/分布式session/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">分布式session</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -321,7 +316,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/2019/08/01/我的第一篇博客/",
+  id: "http://yoursite.com/2019/08/17/秒杀优化/",
   owner: 'ZeroLiu2333',
   repo: 'ZeroLiu2333.github.io',
   oauth: {

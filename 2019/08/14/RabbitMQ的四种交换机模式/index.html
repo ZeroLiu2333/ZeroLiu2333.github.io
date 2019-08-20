@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>分布式session | Hexo</title>
+  <title>RabbitMQ的四种交换机模式 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#用redis+cookie替代原生的session同步–分布式session的方法  1.为什么需要分布式session在开发的过程中，不是只要一台服务器在工作，而是有多台服务器协调工作，那么如果从一台服务器到另一台服务器的时候，用户的session也要传递到其他的服务器中，不然就会造成用户信息丢失。  2.原生session同步：性能问题，实现很复杂  3.用redis+cookie替代原生的">
+  <meta name="description" content="#RabbitMQ的四种交换机模式 交换机Exchange:发送者，将消息往外面发送的时候，并不是直接投递到队列里面去，而是先发送到交换机上面，然后由交换机发送数据到queue上面去，做了依次路由。 ##Direct模式（点对点模式）： 处理路由键。需要将一个队列绑定到交换机上，要求该消息与一个特定的路由键完全匹配。这是一个完整的匹配。 如果一个队列绑定到该交换机上要求路由键 “abc”，则只有被">
 <meta property="og:type" content="article">
-<meta property="og:title" content="分布式session">
-<meta property="og:url" content="http://yoursite.com/2019/08/14/分布式session/index.html">
+<meta property="og:title" content="RabbitMQ的四种交换机模式">
+<meta property="og:url" content="http://yoursite.com/2019/08/14/RabbitMQ的四种交换机模式/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="#用redis+cookie替代原生的session同步–分布式session的方法  1.为什么需要分布式session在开发的过程中，不是只要一台服务器在工作，而是有多台服务器协调工作，那么如果从一台服务器到另一台服务器的时候，用户的session也要传递到其他的服务器中，不然就会造成用户信息丢失。  2.原生session同步：性能问题，实现很复杂  3.用redis+cookie替代原生的">
+<meta property="og:description" content="#RabbitMQ的四种交换机模式 交换机Exchange:发送者，将消息往外面发送的时候，并不是直接投递到队列里面去，而是先发送到交换机上面，然后由交换机发送数据到queue上面去，做了依次路由。 ##Direct模式（点对点模式）： 处理路由键。需要将一个队列绑定到交换机上，要求该消息与一个特定的路由键完全匹配。这是一个完整的匹配。 如果一个队列绑定到该交换机上要求路由键 “abc”，则只有被">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-16T12:18:11.441Z">
+<meta property="og:updated_time" content="2019-08-20T07:14:23.548Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分布式session">
-<meta name="twitter:description" content="#用redis+cookie替代原生的session同步–分布式session的方法  1.为什么需要分布式session在开发的过程中，不是只要一台服务器在工作，而是有多台服务器协调工作，那么如果从一台服务器到另一台服务器的时候，用户的session也要传递到其他的服务器中，不然就会造成用户信息丢失。  2.原生session同步：性能问题，实现很复杂  3.用redis+cookie替代原生的">
+<meta name="twitter:title" content="RabbitMQ的四种交换机模式">
+<meta name="twitter:description" content="#RabbitMQ的四种交换机模式 交换机Exchange:发送者，将消息往外面发送的时候，并不是直接投递到队列里面去，而是先发送到交换机上面，然后由交换机发送数据到queue上面去，做了依次路由。 ##Direct模式（点对点模式）： 处理路由键。需要将一个队列绑定到交换机上，要求该消息与一个特定的路由键完全匹配。这是一个完整的匹配。 如果一个队列绑定到该交换机上要求路由键 “abc”，则只有被">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -154,19 +154,19 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-分布式session" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-RabbitMQ的四种交换机模式" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      分布式session
+      RabbitMQ的四种交换机模式
     </h1>
   
 
         
-        <a href="/2019/08/14/分布式session/" class="archive-article-date">
+        <a href="/2019/08/14/RabbitMQ的四种交换机模式/" class="archive-article-date">
   	<time datetime="2019-08-14T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-14</time>
 </a>
         
@@ -174,29 +174,137 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#用redis+cookie替代原生的session同步–分布式session的方法</p>
-<blockquote>
-<p>1.为什么需要分布式session<br><br>在开发的过程中，不是只要一台服务器在工作，而是有多台服务器协调工作，那么如果从一台服务器到另一台服务器的时候，用户的session也要传递到其他的服务器中，不然就会造成用户信息丢失。</p>
-</blockquote>
-<p>2.原生session同步：性能问题，实现很复杂</p>
-<blockquote>
-<p>3.用redis+cookie替代原生的session同步:<br><br>登陆成功之后生成session id标识用户，写入cookie中，传递到客户端，客户端在随后的访问中上传token，再从token中获取用户信息</p>
-<p>将token映射成用户<br><br>将数据缓存到redis中，不存储在服务器中<br></p>
-</blockquote>
-<pre><code>String token= UUIDUtils.uid();//生成session id
-public void addCookie(String token, HttpServletResponse response, user user){
-    /*
-    1.将token写到cookie中，传递给客户端，标识用户信息。
-    2.将token对应用户的信息保存在redis缓存中。
-     */
-    redisService.set(SelectUserKey.token,token,user);
-    Cookie cookie=new Cookie(COOKIE1_NAME_TOKEN,token);
-    //有效期
-    cookie.setMaxAge(SelectUserKey.token.expireSeconds);
-    cookie.setPath(&quot;/&quot;);
-    response.addCookie(cookie);
+        <p>#RabbitMQ的四种交换机模式</p>
+<p>交换机Exchange:<br>发送者，将消息往外面发送的时候，并不是直接投递到队列里面去，而是先发送到交换机上面，然后由交换机发送数据到queue上面去，做了依次路由。</p>
+<p>##Direct模式（点对点模式）：</p>
+<p>处理路由键。需要将一个队列绑定到交换机上，要求该消息与一个特定的路由键完全匹配。这是一个完整的匹配。</p>
+<p>如果一个队列绑定到该交换机上要求路由键 “abc”，则只有被标记为“abc”的消息才被转发，不会转发abc.def，也不会转发dog.ghi，只会转发abc。</p>
+<p>任何发送到Direct Exchange的消息都会被转发到RouteKey中指定的Queue。</p>
+<p>1.一般情况可以使用rabbitMQ自带的Exchange：””(该Exchange的名字为空字符串，下文称其为default Exchange)。</p>
+<p>2.这种模式下不需要将Exchange进行任何绑定(binding)操作</p>
+<p>3.消息传递时需要一个“RouteKey”，可以简单的理解为要发送到的队列名字。</p>
+<p>4.如果vhost中不存在RouteKey中指定的队列名，则该消息会被抛弃</p>
+<p>队列代码：</p>
+<pre><code>public Queue queue() {
+    //名称，是否持久化
+    return new Queue(QUEUE,true);
+}</code></pre><p>send代码：</p>
+<pre><code>public void send(Object message) {
+    //将对象转换为字符串
+    String msg=RedisService.beanToString(message);
+    log.info(&quot;send message:&quot;+message);
 
-}</code></pre>
+    //第一个参数队列的名字（默认RouteKey），第二个参数发出的信息
+    amqpTemplate.convertAndSend(MQConfig.QUEUE,msg);
+}</code></pre><p>receiver代码：</p>
+<pre><code>@RabbitListener(queues=MQConfig.QUEUE)//指明监听的是哪一个queue
+public void receive(String message) {
+    log.info(&quot;receive message:&quot;+message);
+}</code></pre><p>##Topic模（介于点对点模式和订阅模式）： </p>
+<p>将路由键和某模式进行匹配。此时队列需要绑定要一个模式上。符号“#”匹配一个或多个词，符号“<em>”匹配不多不少一个词。因此“abc.#”能够匹配到“abc.def.ghi”，但是“abc.</em>” 只会匹配到“abc.def”。</p>
+<p>任何发送到Topic Exchange的消息都会被转发到所有关心RouteKey中指定话题的Queue上</p>
+<p>1.这种模式较为复杂，简单来说，就是每个队列都有其关心的主题，所有的消息都带有一个“标题”(RouteKey)，Exchange会将消息转发到所有关注主题能与RouteKey模糊匹配的队列。</p>
+<p>2.这种模式<strong>需要RouteKey</strong>，也许要提前绑定Exchange与Queue。</p>
+<p>3.在进行绑定时，要提供一个该队列关心的主题，如“#.log.#”表示该队列关心所有涉及log的消息(一个RouteKey为”MQ.log.error”的消息会被转发到该队列)。</p>
+<p>4.“#”表示0个或若干个关键字，“”表示一个关键字。如“log.”能与“log.warn”匹配，无法与“log.warn.timeout”匹配；但是“log.#”能与上述两者匹配。</p>
+<p>5.同样，如果Exchange没有发现能够与RouteKey匹配的Queue，则会抛弃此消息。</p>
+<p>队列代码：</p>
+<pre><code>@Bean
+public Queue topicqueue1() {
+    //名称，是否持久化
+    return new Queue(TOPIC_QUEUE1,true);
+}
+/**
+ * Topic模式 交换机：
+ * 
+ */
+@Bean
+public Queue topicqueue2() {
+    //名称，是否持久化
+    return new Queue(TOPIC_QUEUE2,true);
+}
+
+/**
+ * 先将消息放到exchange中去，再把消息放到queue里面去。
+ * @return
+ */
+@Bean
+public TopicExchange topicExchange() {
+    //名称，
+    return new TopicExchange(TOPIC_EXCHANGE);
+}
+
+
+@Bean
+public Binding topicBinding1() {
+    //绑定到某一个queue上面，绑定了topic.key1模式
+    return BindingBuilder.bind(topicqueue1()).to(topicExchange()).with(ROUTINIG_KEY1);//&quot;topic.key1&quot;
+}
+@Bean
+public Binding topicBinding2() {
+    //绑定到某一个queue上面，绑定了topic.#模式
+    return BindingBuilder.bind(topicqueue2()).to(topicExchange()).with(ROUTINIG_KEY2);//&quot;topic.#&quot;  #匹配一个或者多个
+}</code></pre><p>send代码：</p>
+<pre><code>public void sendTopic(Object message) {
+    //将对象转换为字符串
+    String msg=RedisService.beanToString(message);
+    log.info(&quot;sendTopic message:&quot;+message);
+
+    //exchange routingkey（路由键） message        
+    amqpTemplate.convertAndSend(MQConfig.TOPIC_EXCHANGE,&quot;topic.key1&quot;,msg+&quot;1&quot;);
+    amqpTemplate.convertAndSend(MQConfig.TOPIC_EXCHANGE,&quot;topic.key2&quot;,msg+&quot;2&quot;);
+}</code></pre><p>receiver代码：</p>
+<pre><code>@RabbitListener(queues=MQConfig.TOPIC_QUEUE1)//指明监听的是哪一个queue
+public void receiveTopic1(String message) {
+    log.info(&quot;receiveTopic1 message:&quot;+message);
+}
+
+@RabbitListener(queues=MQConfig.TOPIC_QUEUE2)//指明监听的是哪一个queue
+public void receiveTopic2(String message) {
+    log.info(&quot;receiveTopic2 message:&quot;+message);
+}</code></pre><p>##Fanout模式（订阅模式）：广播模式，不需要绑定队列到交换机</p>
+<p>不处理路由键。你只需要简单的将队列绑定到交换机上。一个发送到交换机的消息都会被转发到与该交换机绑定的所有队列上。</p>
+<p>很像子网广播，每台子网内的主机都获得了一份复制的消息。Fanout交换机转发消息是最快的。</p>
+<p>任何发送到Fanout Exchange的消息都会被转发到与该Exchange绑定(Binding)的所有Queue上。</p>
+<p>1.可以理解为路由表的模式</p>
+<p>2.这种模式不需要RouteKey</p>
+<p>3.这种模式需要提前将Exchange与Queue进行绑定，一个Exchange可以绑定多个Queue，一个Queue可以同多个Exchange进行绑定。</p>
+<p>4.如果接受到消息的Exchange没有与任何Queue绑定，则消息会被抛弃。</p>
+<p>队列代码：<br>    /**<br>     * Fanout模式 交换机Exchange<br>     * 广播模式<br>     */<br>    @Bean<br>    public FanoutExchange fanoutExchange() {<br>        //名称，<br>        return new FanoutExchange(FANOUT_EXCHANGE);<br>    }<br>    @Bean<br>    public Binding fanoutBinding1() {<br>        //绑定到某一个queue上面<br>        return BindingBuilder.bind(topicqueue1()).to(fanoutExchange());//广播，没有key的<br>    }</p>
+<pre><code>@Bean
+public Binding fanoutBinding2() {
+    //绑定到某一个queue上面
+    return BindingBuilder.bind(topicqueue2()).to(fanoutExchange());//广播，没有key的
+}</code></pre><p>send代码：</p>
+<pre><code>//广播，不需要key
+public void sendFanout(Object message) {
+    //将对象转换为字符串
+    String msg=RedisService.beanToString(message);
+    log.info(&quot;sendFanout message:&quot;+message);    
+    //exchange routingkey（不需要） message
+    amqpTemplate.convertAndSend(MQConfig.FANOUT_EXCHANGE,&quot;&quot;,msg+&quot;1&quot;);
+    //amqpTemplate.convertAndSend(MQConfig.FANOUT_EXCHANGE,&quot;&quot;,msg+&quot;2&quot;);
+}</code></pre><p>receiver代码：</p>
+<pre><code>@RabbitListener(queues=MQConfig.TOPIC_QUEUE1)//指明监听的是哪一个queue
+public void receiveTopic1(String message) {
+    log.info(&quot;receiveTopic1 message:&quot;+message);
+}
+
+@RabbitListener(queues=MQConfig.TOPIC_QUEUE2)//指明监听的是哪一个queue
+public void receiveTopic2(String message) {
+    log.info(&quot;receiveTopic2 message:&quot;+message);
+}</code></pre><p>##Headers模式：<br>Headers是一个键值对，可以定义成Hashtable。发送者在发送的时候定义一些键值对，接收者也可以再绑定时候传入一些键值对，两者匹配的话，则对应的队列就可以收到消息。 </p>
+<p>匹配有两种方式all和any。这两种方式是在接收端必须要用键值”x-mactch”来定义。all代表定义的多个键值对都要满足，any代表只要满足一个就可以。fanout，direct，topic exchange的routingKey都需要要字符串形式的，而headers exchange则没有这个要求，因为键值对的值可以是任何类型。 </p>
+<p>队列代码：<br>    /**<br>     * HEADER<br>     * header模式 交换机Exchange<br>     *<br>     * @return<br>     <em>/<br>    @Bean<br>    public HeadersExchange headersExchange() {<br>        // 名称，<br>        return new HeadersExchange(HEADER_EXCHANGE);<br>    }<br>    /*</em><br>     * 新建一个headerqueue<br>     * @return<br>     <em>/<br>    @Bean<br>    public Queue headerQueue1() {<br>        //名称，是否持久化<br>        return new Queue(HEADER_QUEUE,true);<br>    }<br>    /*</em><br>     * headerbinding<br>     *<br>     * 在这个message里面，会有一个head部分，必须满足map里面的key-value，然后符合了之后<br>     * 才能在queue里面放东西。<br>     */<br>    @Bean<br>    public Binding headerBinding() {<br>        //绑定到某一个queue上面<br>        Map&lt;String,Object&gt; map=new HashMap&lt;String,Object&gt;();<br>        map.put(“header1”,”value1” );<br>        map.put(“header2”,”value2” );<br>        return BindingBuilder.bind(headerQueue1()).to(headersExchange()).whereAll(map).match();<br>    }<br>    }<br>send代码：<br>    // 使用header，不需要key<br>    public void sendHeader(Object message) {<br>        // 将对象转换为字符串<br>        String msg = RedisService.beanToString(message);<br>        log.info(“sendHeader message:” + message);<br>        MessageProperties properties=new MessageProperties();<br>        properties.setHeader(“header1”, “value1”);<br>        properties.setHeader(“header2”, “value2”);<br>        Message obj=new Message(msg.getBytes(),properties);<br>        //传入一个message的对象。<br>        amqpTemplate.convertAndSend(MQConfig.HEADER_QUEUE, “”, obj);<br>    }<br>receiver代码：</p>
+<pre><code>@RabbitListener(queues=MQConfig.HEADER_QUEUE)//指明监听的是哪一个queue
+public void receiveHeaderQueue(byte[] message) {
+    log.info(&quot;receive Header Queue message:&quot;+new String(message));
+}</code></pre><p>##秒杀接口优化：<br>减少数据库访问（异步下单）<br>1.系统初始化，把商品库存数量加载到redis<br>2.收到请求，redis减库存，库存不足，直接返回，否则进入3<br>3.请求入队，立即返回排队中<br>（异步下单）<br>4.请求出队，减少库存<br>5.客户端轮询，是否秒杀成功</p>
+<p>##异步任务</p>
+<p>为什么要异步任务呢，因此抢课之后，就会有插入已选课表和更新数据、查询数据库等操作，这样抢课程序就会很慢。<br><br>由于抢课成功后会进入原课程列表，我们可以做一个异步任务。异步队列任务一般都是使用消息中间件实现。<br>因为在抢课后我们会更新数据库，因此我们可以将查询redis和查询数据库不同时进行。<br><br>为什么需要轮询呢，因为我们要把已经进入队列的数据处理的结果返回，再查询数据库更新课程页面。轮询就是先把结果输出到页面，再更新数据库。</p>
+<p>轮询第一个方法：<br>insert:是否成功进入队列<br>队列：得到select，user，cid的信息，并存放到到秒杀信息中，传送到下一个进行秒杀事务的方法。<br>在秒杀事务中减少库存，标记内存标记。</p>
+<p>轮询第二个方法：<br>插入选课信息到数据库和缓存，更改课程表数据。</p>
+
       
 
       
@@ -275,7 +383,7 @@ public void addCookie(String token, HttpServletResponse response, user user){
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/14/分布式session/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/14/RabbitMQ的四种交换机模式/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -289,18 +397,18 @@ public void addCookie(String token, HttpServletResponse response, user user){
   
 <nav id="article-nav">
   
-    <a href="/2019/08/17/秒杀优化/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/08/14/分布式session/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          秒杀优化
+          分布式session
         
       </div>
     </a>
   
   
-    <a href="/2019/08/14/RabbitMQ的四种交换机模式/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">RabbitMQ的四种交换机模式</div>
+    <a href="/2019/08/13/将本地项目发送到远端git时出现的问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">将本地项目发送到远端git时出现的问题</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -339,7 +447,7 @@ public void addCookie(String token, HttpServletResponse response, user user){
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/2019/08/14/分布式session/",
+  id: "http://yoursite.com/2019/08/14/RabbitMQ的四种交换机模式/",
   owner: 'ZeroLiu2333',
   repo: 'ZeroLiu2333.github.io',
   oauth: {

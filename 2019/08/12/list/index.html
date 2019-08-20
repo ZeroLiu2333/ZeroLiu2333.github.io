@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>分布式session | Hexo</title>
+  <title>List&lt;&gt;和List的区别 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#用redis+cookie替代原生的session同步–分布式session的方法  1.为什么需要分布式session在开发的过程中，不是只要一台服务器在工作，而是有多台服务器协调工作，那么如果从一台服务器到另一台服务器的时候，用户的session也要传递到其他的服务器中，不然就会造成用户信息丢失。  2.原生session同步：性能问题，实现很复杂  3.用redis+cookie替代原生的">
+  <meta name="description" content="List&amp;lt;&amp;gt;和List的区别 #为什么freemarker在返回“同一个类型”的数据的时候，不能在同一个模板中渲染数据？？？答案就是后端传到freemarker的数据类型不一样了，就像list和list&amp;lt;&amp;gt;,貌似都是list，但是真的不一样啊啊啊！！！他们都是可以在后端渲染的，渲染的模板还是一样的 &amp;lt;#list course_list as course1&amp;gt;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="分布式session">
-<meta property="og:url" content="http://yoursite.com/2019/08/14/分布式session/index.html">
+<meta property="og:title" content="List&lt;&gt;和List的区别">
+<meta property="og:url" content="http://yoursite.com/2019/08/12/list/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="#用redis+cookie替代原生的session同步–分布式session的方法  1.为什么需要分布式session在开发的过程中，不是只要一台服务器在工作，而是有多台服务器协调工作，那么如果从一台服务器到另一台服务器的时候，用户的session也要传递到其他的服务器中，不然就会造成用户信息丢失。  2.原生session同步：性能问题，实现很复杂  3.用redis+cookie替代原生的">
+<meta property="og:description" content="List&amp;lt;&amp;gt;和List的区别 #为什么freemarker在返回“同一个类型”的数据的时候，不能在同一个模板中渲染数据？？？答案就是后端传到freemarker的数据类型不一样了，就像list和list&amp;lt;&amp;gt;,貌似都是list，但是真的不一样啊啊啊！！！他们都是可以在后端渲染的，渲染的模板还是一样的 &amp;lt;#list course_list as course1&amp;gt;">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-16T12:18:11.441Z">
+<meta property="og:updated_time" content="2019-08-20T07:12:55.060Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分布式session">
-<meta name="twitter:description" content="#用redis+cookie替代原生的session同步–分布式session的方法  1.为什么需要分布式session在开发的过程中，不是只要一台服务器在工作，而是有多台服务器协调工作，那么如果从一台服务器到另一台服务器的时候，用户的session也要传递到其他的服务器中，不然就会造成用户信息丢失。  2.原生session同步：性能问题，实现很复杂  3.用redis+cookie替代原生的">
+<meta name="twitter:title" content="List&lt;&gt;和List的区别">
+<meta name="twitter:description" content="List&amp;lt;&amp;gt;和List的区别 #为什么freemarker在返回“同一个类型”的数据的时候，不能在同一个模板中渲染数据？？？答案就是后端传到freemarker的数据类型不一样了，就像list和list&amp;lt;&amp;gt;,貌似都是list，但是真的不一样啊啊啊！！！他们都是可以在后端渲染的，渲染的模板还是一样的 &amp;lt;#list course_list as course1&amp;gt;">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -154,49 +154,44 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-分布式session" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-list" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      分布式session
+      List&lt;&gt;和List的区别
     </h1>
   
 
         
-        <a href="/2019/08/14/分布式session/" class="archive-article-date">
-  	<time datetime="2019-08-14T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-14</time>
+        <a href="/2019/08/12/list/" class="archive-article-date">
+  	<time datetime="2019-08-12T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#用redis+cookie替代原生的session同步–分布式session的方法</p>
-<blockquote>
-<p>1.为什么需要分布式session<br><br>在开发的过程中，不是只要一台服务器在工作，而是有多台服务器协调工作，那么如果从一台服务器到另一台服务器的时候，用户的session也要传递到其他的服务器中，不然就会造成用户信息丢失。</p>
-</blockquote>
-<p>2.原生session同步：性能问题，实现很复杂</p>
-<blockquote>
-<p>3.用redis+cookie替代原生的session同步:<br><br>登陆成功之后生成session id标识用户，写入cookie中，传递到客户端，客户端在随后的访问中上传token，再从token中获取用户信息</p>
-<p>将token映射成用户<br><br>将数据缓存到redis中，不存储在服务器中<br></p>
-</blockquote>
-<pre><code>String token= UUIDUtils.uid();//生成session id
-public void addCookie(String token, HttpServletResponse response, user user){
-    /*
-    1.将token写到cookie中，传递给客户端，标识用户信息。
-    2.将token对应用户的信息保存在redis缓存中。
-     */
-    redisService.set(SelectUserKey.token,token,user);
-    Cookie cookie=new Cookie(COOKIE1_NAME_TOKEN,token);
-    //有效期
-    cookie.setMaxAge(SelectUserKey.token.expireSeconds);
-    cookie.setPath(&quot;/&quot;);
-    response.addCookie(cookie);
+        <p>List&lt;&gt;和List的区别</p>
+<p>#为什么freemarker在返回“同一个类型”的数据的时候，不能在同一个模板中渲染数据？？？<br>答案就是后端传到freemarker的数据类型不一样了，就像list和list&lt;&gt;,<br>貌似都是list，但是真的不一样啊啊啊！！！他们都是可以在后端渲染的，渲染的模板还是一样的</p>
+<pre><code>&lt;#list course_list as course1&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;${course1.cid}&lt;/td&gt;
+                    &lt;td&gt;${course1.cname}&lt;/td&gt;
+                    &lt;td&gt;${course1.teacher}&lt;/td&gt;
+                    &lt;td&gt;${course1.number}&lt;/td&gt;
+                    &lt;td&gt;${course1.selected}&lt;/td&gt;
+                    &lt;td&gt;${course1.slimit}&lt;/td&gt;
+                    &lt;td&gt;${course1.glimit}&lt;/td&gt;
+                    &lt;td&gt;${(course1.start_date?string(&apos;yyyy.MM.dd HH:mm:ss&apos;))!}&lt;/td&gt;
+                    &lt;td&gt;${(course1.end_date?string(&apos;yyyy.MM.dd HH:mm:ss&apos;))!}&lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;button class=&quot;btn btn-info&quot; onclick=&quot;unselect(${course1.cid},${page.currentPageNum})&quot;&gt;退课&lt;/button&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/#list&gt;</code></pre><p>course_list类型可以是list和list&lt;&gt;，但是如果你查询课程后还是用上面那个模板，你的course_list类型一定要相同，因为freemarker获取后端传送的数据会分辨数据的类型。</p>
 
-}</code></pre>
       
 
       
@@ -275,7 +270,7 @@ public void addCookie(String token, HttpServletResponse response, user user){
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/14/分布式session/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/12/list/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -289,18 +284,18 @@ public void addCookie(String token, HttpServletResponse response, user user){
   
 <nav id="article-nav">
   
-    <a href="/2019/08/17/秒杀优化/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/08/12/freemark/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          秒杀优化
+          freemark的时间显示问题
         
       </div>
     </a>
   
   
-    <a href="/2019/08/14/RabbitMQ的四种交换机模式/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">RabbitMQ的四种交换机模式</div>
+    <a href="/2019/08/12/mybatis/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mybatis在获取mysql字段的时候为null的原因及解决方式</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -339,7 +334,7 @@ public void addCookie(String token, HttpServletResponse response, user user){
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/2019/08/14/分布式session/",
+  id: "http://yoursite.com/2019/08/12/list/",
   owner: 'ZeroLiu2333',
   repo: 'ZeroLiu2333.github.io',
   oauth: {

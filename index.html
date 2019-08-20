@@ -152,6 +152,76 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-秒杀优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/17/秒杀优化/">秒杀优化</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/17/秒杀优化/" class="archive-article-date">
+  	<time datetime="2019-08-17T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##秒杀接口优化：<br>减少数据库访问（异步下单）<br>1.系统初始化，把商品库存数量加载到redis<br>2.收到请求，redis减库存，库存不足，直接返回，否则进入3<br>3.请求入队，立即返回排队中<br>（异步下单）<br>4.请求出队，减少库存<br>5.客户端轮询，是否秒杀成功</p>
+<p>##异步任务</p>
+<p>为什么要异步任务呢，因此抢课之后，就会有插入已选课表和更新数据、查询数据库等操作，这样抢课程序就会很慢。<br><br>由于抢课成功后会进入原课程列表，我们可以做一个异步任务。异步队列任务一般都是使用消息中间件实现。<br>因为在抢课后我们会更新数据库，因此我们可以将查询redis和查询数据库不同时进行。<br><br>为什么需要轮询呢，因为我们要把已经进入队列的数据处理的结果返回，再查询数据库更新课程页面。轮询就是先把结果输出到页面，再更新数据库。</p>
+<p>轮询第一个方法：<br>insert:是否成功进入队列<br>队列：得到select，user，cid的信息，并存放到到秒杀信息中，传送到下一个进行秒杀事务的方法。<br>在秒杀事务中减少库存，标记内存标记。</p>
+<p>轮询第二个方法：<br>插入选课信息到数据库和缓存，更改课程表数据。</p>
+<p>##页面优化技术</p>
+<p>页面缓存+URL缓存+对象缓存—减少数据库的访问</p>
+<p>页面静态化：将页面缓存在客户端，减少流量访问—页面全部都是html，通过ajax或js获取数据，渲染页面：即使做了页面缓存，但是客户端还是要从服务端下载页面数据；前后端分离<br>页面缓存有效期比较短</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/17/秒杀优化/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-分布式session" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -207,6 +277,492 @@ public void addCookie(String token, HttpServletResponse response, user user){
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/08/14/分布式session/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-RabbitMQ的四种交换机模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/14/RabbitMQ的四种交换机模式/">RabbitMQ的四种交换机模式</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/14/RabbitMQ的四种交换机模式/" class="archive-article-date">
+  	<time datetime="2019-08-14T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#RabbitMQ的四种交换机模式</p>
+<p>交换机Exchange:<br>发送者，将消息往外面发送的时候，并不是直接投递到队列里面去，而是先发送到交换机上面，然后由交换机发送数据到queue上面去，做了依次路由。</p>
+<p>##Direct模式（点对点模式）：</p>
+<p>处理路由键。需要将一个队列绑定到交换机上，要求该消息与一个特定的路由键完全匹配。这是一个完整的匹配。</p>
+<p>如果一个队列绑定到该交换机上要求路由键 “abc”，则只有被标记为“abc”的消息才被转发，不会转发abc.def，也不会转发dog.ghi，只会转发abc。</p>
+<p>任何发送到Direct Exchange的消息都会被转发到RouteKey中指定的Queue。</p>
+<p>1.一般情况可以使用rabbitMQ自带的Exchange：””(该Exchange的名字为空字符串，下文称其为default Exchange)。</p>
+<p>2.这种模式下不需要将Exchange进行任何绑定(binding)操作</p>
+<p>3.消息传递时需要一个“RouteKey”，可以简单的理解为要发送到的队列名字。</p>
+<p>4.如果vhost中不存在RouteKey中指定的队列名，则该消息会被抛弃</p>
+<p>队列代码：</p>
+<pre><code>public Queue queue() {
+    //名称，是否持久化
+    return new Queue(QUEUE,true);
+}</code></pre><p>send代码：</p>
+<pre><code>public void send(Object message) {
+    //将对象转换为字符串
+    String msg=RedisService.beanToString(message);
+    log.info(&quot;send message:&quot;+message);
+
+    //第一个参数队列的名字（默认RouteKey），第二个参数发出的信息
+    amqpTemplate.convertAndSend(MQConfig.QUEUE,msg);
+}</code></pre><p>receiver代码：</p>
+<pre><code>@RabbitListener(queues=MQConfig.QUEUE)//指明监听的是哪一个queue
+public void receive(String message) {
+    log.info(&quot;receive message:&quot;+message);
+}</code></pre><p>##Topic模（介于点对点模式和订阅模式）： </p>
+<p>将路由键和某模式进行匹配。此时队列需要绑定要一个模式上。符号“#”匹配一个或多个词，符号“<em>”匹配不多不少一个词。因此“abc.#”能够匹配到“abc.def.ghi”，但是“abc.</em>” 只会匹配到“abc.def”。</p>
+<p>任何发送到Topic Exchange的消息都会被转发到所有关心RouteKey中指定话题的Queue上</p>
+<p>1.这种模式较为复杂，简单来说，就是每个队列都有其关心的主题，所有的消息都带有一个“标题”(RouteKey)，Exchange会将消息转发到所有关注主题能与RouteKey模糊匹配的队列。</p>
+<p>2.这种模式<strong>需要RouteKey</strong>，也许要提前绑定Exchange与Queue。</p>
+<p>3.在进行绑定时，要提供一个该队列关心的主题，如“#.log.#”表示该队列关心所有涉及log的消息(一个RouteKey为”MQ.log.error”的消息会被转发到该队列)。</p>
+<p>4.“#”表示0个或若干个关键字，“”表示一个关键字。如“log.”能与“log.warn”匹配，无法与“log.warn.timeout”匹配；但是“log.#”能与上述两者匹配。</p>
+<p>5.同样，如果Exchange没有发现能够与RouteKey匹配的Queue，则会抛弃此消息。</p>
+<p>队列代码：</p>
+<pre><code>@Bean
+public Queue topicqueue1() {
+    //名称，是否持久化
+    return new Queue(TOPIC_QUEUE1,true);
+}
+/**
+ * Topic模式 交换机：
+ * 
+ */
+@Bean
+public Queue topicqueue2() {
+    //名称，是否持久化
+    return new Queue(TOPIC_QUEUE2,true);
+}
+
+/**
+ * 先将消息放到exchange中去，再把消息放到queue里面去。
+ * @return
+ */
+@Bean
+public TopicExchange topicExchange() {
+    //名称，
+    return new TopicExchange(TOPIC_EXCHANGE);
+}
+
+
+@Bean
+public Binding topicBinding1() {
+    //绑定到某一个queue上面，绑定了topic.key1模式
+    return BindingBuilder.bind(topicqueue1()).to(topicExchange()).with(ROUTINIG_KEY1);//&quot;topic.key1&quot;
+}
+@Bean
+public Binding topicBinding2() {
+    //绑定到某一个queue上面，绑定了topic.#模式
+    return BindingBuilder.bind(topicqueue2()).to(topicExchange()).with(ROUTINIG_KEY2);//&quot;topic.#&quot;  #匹配一个或者多个
+}</code></pre><p>send代码：</p>
+<pre><code>public void sendTopic(Object message) {
+    //将对象转换为字符串
+    String msg=RedisService.beanToString(message);
+    log.info(&quot;sendTopic message:&quot;+message);
+
+    //exchange routingkey（路由键） message        
+    amqpTemplate.convertAndSend(MQConfig.TOPIC_EXCHANGE,&quot;topic.key1&quot;,msg+&quot;1&quot;);
+    amqpTemplate.convertAndSend(MQConfig.TOPIC_EXCHANGE,&quot;topic.key2&quot;,msg+&quot;2&quot;);
+}</code></pre><p>receiver代码：</p>
+<pre><code>@RabbitListener(queues=MQConfig.TOPIC_QUEUE1)//指明监听的是哪一个queue
+public void receiveTopic1(String message) {
+    log.info(&quot;receiveTopic1 message:&quot;+message);
+}
+
+@RabbitListener(queues=MQConfig.TOPIC_QUEUE2)//指明监听的是哪一个queue
+public void receiveTopic2(String message) {
+    log.info(&quot;receiveTopic2 message:&quot;+message);
+}</code></pre><p>##Fanout模式（订阅模式）：广播模式，不需要绑定队列到交换机</p>
+<p>不处理路由键。你只需要简单的将队列绑定到交换机上。一个发送到交换机的消息都会被转发到与该交换机绑定的所有队列上。</p>
+<p>很像子网广播，每台子网内的主机都获得了一份复制的消息。Fanout交换机转发消息是最快的。</p>
+<p>任何发送到Fanout Exchange的消息都会被转发到与该Exchange绑定(Binding)的所有Queue上。</p>
+<p>1.可以理解为路由表的模式</p>
+<p>2.这种模式不需要RouteKey</p>
+<p>3.这种模式需要提前将Exchange与Queue进行绑定，一个Exchange可以绑定多个Queue，一个Queue可以同多个Exchange进行绑定。</p>
+<p>4.如果接受到消息的Exchange没有与任何Queue绑定，则消息会被抛弃。</p>
+<p>队列代码：<br>    /**<br>     * Fanout模式 交换机Exchange<br>     * 广播模式<br>     */<br>    @Bean<br>    public FanoutExchange fanoutExchange() {<br>        //名称，<br>        return new FanoutExchange(FANOUT_EXCHANGE);<br>    }<br>    @Bean<br>    public Binding fanoutBinding1() {<br>        //绑定到某一个queue上面<br>        return BindingBuilder.bind(topicqueue1()).to(fanoutExchange());//广播，没有key的<br>    }</p>
+<pre><code>@Bean
+public Binding fanoutBinding2() {
+    //绑定到某一个queue上面
+    return BindingBuilder.bind(topicqueue2()).to(fanoutExchange());//广播，没有key的
+}</code></pre><p>send代码：</p>
+<pre><code>//广播，不需要key
+public void sendFanout(Object message) {
+    //将对象转换为字符串
+    String msg=RedisService.beanToString(message);
+    log.info(&quot;sendFanout message:&quot;+message);    
+    //exchange routingkey（不需要） message
+    amqpTemplate.convertAndSend(MQConfig.FANOUT_EXCHANGE,&quot;&quot;,msg+&quot;1&quot;);
+    //amqpTemplate.convertAndSend(MQConfig.FANOUT_EXCHANGE,&quot;&quot;,msg+&quot;2&quot;);
+}</code></pre><p>receiver代码：</p>
+<pre><code>@RabbitListener(queues=MQConfig.TOPIC_QUEUE1)//指明监听的是哪一个queue
+public void receiveTopic1(String message) {
+    log.info(&quot;receiveTopic1 message:&quot;+message);
+}
+
+@RabbitListener(queues=MQConfig.TOPIC_QUEUE2)//指明监听的是哪一个queue
+public void receiveTopic2(String message) {
+    log.info(&quot;receiveTopic2 message:&quot;+message);
+}</code></pre><p>##Headers模式：<br>Headers是一个键值对，可以定义成Hashtable。发送者在发送的时候定义一些键值对，接收者也可以再绑定时候传入一些键值对，两者匹配的话，则对应的队列就可以收到消息。 </p>
+<p>匹配有两种方式all和any。这两种方式是在接收端必须要用键值”x-mactch”来定义。all代表定义的多个键值对都要满足，any代表只要满足一个就可以。fanout，direct，topic exchange的routingKey都需要要字符串形式的，而headers exchange则没有这个要求，因为键值对的值可以是任何类型。 </p>
+<p>队列代码：<br>    /**<br>     * HEADER<br>     * header模式 交换机Exchange<br>     *<br>     * @return<br>     <em>/<br>    @Bean<br>    public HeadersExchange headersExchange() {<br>        // 名称，<br>        return new HeadersExchange(HEADER_EXCHANGE);<br>    }<br>    /*</em><br>     * 新建一个headerqueue<br>     * @return<br>     <em>/<br>    @Bean<br>    public Queue headerQueue1() {<br>        //名称，是否持久化<br>        return new Queue(HEADER_QUEUE,true);<br>    }<br>    /*</em><br>     * headerbinding<br>     *<br>     * 在这个message里面，会有一个head部分，必须满足map里面的key-value，然后符合了之后<br>     * 才能在queue里面放东西。<br>     */<br>    @Bean<br>    public Binding headerBinding() {<br>        //绑定到某一个queue上面<br>        Map&lt;String,Object&gt; map=new HashMap&lt;String,Object&gt;();<br>        map.put(“header1”,”value1” );<br>        map.put(“header2”,”value2” );<br>        return BindingBuilder.bind(headerQueue1()).to(headersExchange()).whereAll(map).match();<br>    }<br>    }<br>send代码：<br>    // 使用header，不需要key<br>    public void sendHeader(Object message) {<br>        // 将对象转换为字符串<br>        String msg = RedisService.beanToString(message);<br>        log.info(“sendHeader message:” + message);<br>        MessageProperties properties=new MessageProperties();<br>        properties.setHeader(“header1”, “value1”);<br>        properties.setHeader(“header2”, “value2”);<br>        Message obj=new Message(msg.getBytes(),properties);<br>        //传入一个message的对象。<br>        amqpTemplate.convertAndSend(MQConfig.HEADER_QUEUE, “”, obj);<br>    }<br>receiver代码：</p>
+<pre><code>@RabbitListener(queues=MQConfig.HEADER_QUEUE)//指明监听的是哪一个queue
+public void receiveHeaderQueue(byte[] message) {
+    log.info(&quot;receive Header Queue message:&quot;+new String(message));
+}</code></pre><p>##秒杀接口优化：<br>减少数据库访问（异步下单）<br>1.系统初始化，把商品库存数量加载到redis<br>2.收到请求，redis减库存，库存不足，直接返回，否则进入3<br>3.请求入队，立即返回排队中<br>（异步下单）<br>4.请求出队，减少库存<br>5.客户端轮询，是否秒杀成功</p>
+<p>##异步任务</p>
+<p>为什么要异步任务呢，因此抢课之后，就会有插入已选课表和更新数据、查询数据库等操作，这样抢课程序就会很慢。<br><br>由于抢课成功后会进入原课程列表，我们可以做一个异步任务。异步队列任务一般都是使用消息中间件实现。<br>因为在抢课后我们会更新数据库，因此我们可以将查询redis和查询数据库不同时进行。<br><br>为什么需要轮询呢，因为我们要把已经进入队列的数据处理的结果返回，再查询数据库更新课程页面。轮询就是先把结果输出到页面，再更新数据库。</p>
+<p>轮询第一个方法：<br>insert:是否成功进入队列<br>队列：得到select，user，cid的信息，并存放到到秒杀信息中，传送到下一个进行秒杀事务的方法。<br>在秒杀事务中减少库存，标记内存标记。</p>
+<p>轮询第二个方法：<br>插入选课信息到数据库和缓存，更改课程表数据。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/14/RabbitMQ的四种交换机模式/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-将本地项目发送到远端git时出现的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/将本地项目发送到远端git时出现的问题/">将本地项目发送到远端git时出现的问题</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/13/将本地项目发送到远端git时出现的问题/" class="archive-article-date">
+  	<time datetime="2019-08-13T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##将本地项目发送到远端git时出现的问题</p>
+<p>在本地写好项目，一路git add * 和 git commit -m ‘XXX’</p>
+<p>然后在github上新建仓库，准备关联后，把代码推送至远程仓库</p>
+<p>在git push 时就出错了：</p>
+<pre><code>Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+
+Please make sure you have the correct access rights
+and the repository exists.</code></pre><p>解决方法：在githob创建项目后，本地使用git 克隆代码 需要在githob配置密钥<br><br>配置密钥的博主链接：<br><br><a href="https://blog.csdn.net/hhhccckkk/article/details/50737077" target="_blank" rel="noopener">https://blog.csdn.net/hhhccckkk/article/details/50737077</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/13/将本地项目发送到远端git时出现的问题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-freemark" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/12/freemark/">freemark的时间显示问题</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/12/freemark/" class="archive-article-date">
+  	<time datetime="2019-08-12T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#freemark的时间显示问题—java.util.Date和java.sql.Date</p>
+<blockquote>
+<p>我将数据库中datetime格式的数据在Java中取出时，发现了java.util.Date和java.sql.Date的区别</p>
+</blockquote>
+<p>1.如果使用java.util.Date，则输出的数据格式是</p>
+<pre><code>Thu Aug 01 12:00:00 CST 2019</code></pre><p>而java.sql.Date输出的数据是</p>
+<pre><code>2019-08-17</code></pre><p>我是在freemark上使用时间具体到分秒，因此只要使用java.util.Date格式的数据，然后在模板上转化一下数据格式，在前端的显示就没有问题。</p>
+<pre><code>${(course1.start_date?string(&apos;yyyy.MM.dd HH:mm:ss&apos;))!}</code></pre><p>但是如果要输出到数据库的话，使用java.util.Date是肯定出错的，因为格式不同，而且这个日期格式也不能在sql上使用，但是如果使用java.sql.Date也会出错，因为这个数据格式没有精确到分秒，因此如果要输出数据到数据库的话，就要转时间的格式。</p>
+<p>百度方法：<br><br>我们需要使用到java.sql.Timestamp这个类来进行转换：</p>
+<pre><code>Timestamp t = new Timestamp(user.getBirthay().getTime());
+ps.setTimestamp(3, t);</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/12/freemark/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-list" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/12/list/">List&lt;&gt;和List的区别</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/12/list/" class="archive-article-date">
+  	<time datetime="2019-08-12T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>List&lt;&gt;和List的区别</p>
+<p>#为什么freemarker在返回“同一个类型”的数据的时候，不能在同一个模板中渲染数据？？？<br>答案就是后端传到freemarker的数据类型不一样了，就像list和list&lt;&gt;,<br>貌似都是list，但是真的不一样啊啊啊！！！他们都是可以在后端渲染的，渲染的模板还是一样的</p>
+<pre><code>&lt;#list course_list as course1&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;${course1.cid}&lt;/td&gt;
+                    &lt;td&gt;${course1.cname}&lt;/td&gt;
+                    &lt;td&gt;${course1.teacher}&lt;/td&gt;
+                    &lt;td&gt;${course1.number}&lt;/td&gt;
+                    &lt;td&gt;${course1.selected}&lt;/td&gt;
+                    &lt;td&gt;${course1.slimit}&lt;/td&gt;
+                    &lt;td&gt;${course1.glimit}&lt;/td&gt;
+                    &lt;td&gt;${(course1.start_date?string(&apos;yyyy.MM.dd HH:mm:ss&apos;))!}&lt;/td&gt;
+                    &lt;td&gt;${(course1.end_date?string(&apos;yyyy.MM.dd HH:mm:ss&apos;))!}&lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;button class=&quot;btn btn-info&quot; onclick=&quot;unselect(${course1.cid},${page.currentPageNum})&quot;&gt;退课&lt;/button&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/#list&gt;</code></pre><p>course_list类型可以是list和list&lt;&gt;，但是如果你查询课程后还是用上面那个模板，你的course_list类型一定要相同，因为freemarker获取后端传送的数据会分辨数据的类型。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/12/list/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-mybatis" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/12/mybatis/">mybatis在获取mysql字段的时候为null的原因及解决方式</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/12/mybatis/" class="archive-article-date">
+  	<time datetime="2019-08-12T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>mybatis在获取mysql字段的时候为null的原因及解决方式<br>最近在做项目时遇到个问题，mybatis在获取mysql字段的时候为null。</p>
+<p>经过一系列的排查终于找到了原因，在此记录下以备今后查阅。</p>
+<p>由于mysql字段含有下划线，例如：user_phone，mybatis中开启了自动驼峰</p>
+<!--自动驼峰转换-->
+<setting name="mapUnderscoreToCamelCase" value="true">
+此时的user_phone 将被映射为userPhone属性，然而实体类中是 user_phone，所以造成null。
+
+<p>解决方法：</p>
+<p>在xml映射文件中 用resultMap 代替 resultType。</p>
+</setting>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/12/mybatis/">展开全文 >></a>
         </p>
       
 
@@ -472,502 +1028,6 @@ public String getCookieValue(HttpServletRequest request,String cookiename){
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/08/10/@ResponseBody和@RequestMapping的原理/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-回溯和递归的区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/09/回溯和递归的区别/">回溯和递归的区别</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/09/回溯和递归的区别/" class="archive-article-date">
-  	<time datetime="2019-08-09T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#回溯和递归的区别<br>用一道迷宫来讲解回溯和递归的区别：</p>
-<blockquote>
-<p>如果一个问题问迷宫有多少种方法可以出去，那么就是递归，因为它的值是确定。</p>
-</blockquote>
-<blockquote>
-</blockquote>
-<p>如果一个问题问迷宫走这条路能不能出去，那么就是回溯，因为回溯是探索这条路能不能行得通，行不通就行不通。</p>
-<blockquote>
-</blockquote>
-<p>递归是一种解法,它肯定会有一个确定的值，但是回溯只是一个搜索的过程，这个结果可能存在，也可能不存在。回溯是在递归过程的一个剪枝的步骤。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/09/回溯和递归的区别/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-剑指offer" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/08/剑指offer/">替换空格类题目</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/08/剑指offer/" class="archive-article-date">
-  	<time datetime="2019-08-08T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>剑指offer</p>
-<blockquote>
-<p>替换空格类题目的延伸（降低时间复杂度）</p>
-</blockquote>
-<p>两种方法：</p>
-<blockquote>
-<p>方法一：时间复杂度为O(n<em>n)<br><br>从头到尾替换字符串的每个空格为“%20”，假设有n个空格，最后一个字符串要移动n次才能完成空格替换，因此时间复杂度为o(n</em>n)<br><br>方法二：时间复杂度为O(n)<br><br>从尾向头移动，假设有n个空格，每个字符串都是移动一次就完成空格替换，因此时间复杂度为o(n) </p>
-</blockquote>
-</blockquote>
-<blockquote>
-<p>单链表的难点</p>
-<p>p=p-&gt;next的理解：单链表中每个结点的存储地址是存放在其前趋结点next域中。</p>
-</blockquote>
-<blockquote>
-<p>栈：先进后出</p>
-<blockquote>
-<p>##递归的原理就是栈</p>
-</blockquote>
-</blockquote>
-<blockquote>
-<p>快速排序</p>
-</blockquote>
-<pre><code>import java.util.Scanner;
-/*
- * 以第一位为基准的快速排序
- */
-public class QuickSort {
-
-public static void main(String[] args) {
-    Scanner sc=new Scanner(System.in);
-    int n=sc.nextInt();
-    int[] a=new int[n];
-    for(int i=0;i&lt;n;i++){
-        a[i]=sc.nextInt();
-    }
-    Quick(0,n-1,a);
-    //打印快速排序后的队列
-    for(int i=0;i&lt;n;i++){
-        System.out.print(a[i]+&quot; &quot;);
-    }
-
-
-}
-public static void Quick(int start,int end,int[] a){
-    int index=sort(start,end,a);
-    if(index&gt;start&amp;&amp;index&lt;end){
-        Quick(start,index-1,a);
-        Quick(index+1,end,a);
-    }
-}
-public static int sort(int start,int end,int[] a){
-    //取第一个元素作为基准
-    int index=start;
-    int s=start;
-    int e=end;
-    int base;
-    while(start!=end){
-        //从最后一个元素向前移动，保证大于基准的元素在右边
-            while(end&gt;start&amp;&amp;start==index){
-            if(a[index]&lt;a[end])end--;
-            else{
-                base=a[index];
-                a[start]=a[end];
-                a[end]=base;
-                index=end;
-                start++;
-            }
-            }
-            //从开始的元素向前移动，保证小于基准的元素在左边
-            while(end&gt;start&amp;&amp;end==index){
-                if(a[index]&gt;a[start])start++;
-                else{
-                    base=a[index];
-                    a[end]=a[start];
-                    a[start]=base;
-                    index=start;
-                    end--;
-                }
-            }
-            if(index==s){
-                index++;
-                start++;
-                end=e;
-            }
-        }
-    return index;
-}
-
-}</code></pre><blockquote>
-<p>旋转数组的最小数字</p>
-<blockquote>
-<p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个递增排序的数组的一个旋转，输出最小元素。<br><br>解法：<br><br>测试用例：<br><br>1.数组的最后一个元素小于等于第一个元素，且中间的元素不等于第一个或最后一个元素。<br><br>使用二分查找法：将数组分为两个子数组，中间元素大于第一个元素就是递增数组，否则就是递减数组。创建三个数，max、mea，min。第一次max是数组第一个元素，mea是数组中间的元素，min是数组最后一个元素。如果mea&gt;max,则max=mea，否则min=mea，再次重新取中间的元素。依次类推，直到max和min是相邻的数时，min是最小的数。<br></p>
-</blockquote>
-<blockquote>
-<p>2.数组的最后一个元素大于第一个元素。<br><br>旋转数组和原数组相同，取第一个元素</p>
-</blockquote>
-<p>3.数组的最后一个元素等于第一个元素，且中间的元素等于第一个元素。<br><br>只能使用顺序查找</p>
-</blockquote>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/08/剑指offer/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-有趣的算法’" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/05/有趣的算法’/">&#39;有趣的算法</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/05/有趣的算法’/" class="archive-article-date">
-  	<time datetime="2019-08-05T14:39:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#网易算法记录</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/05/有趣的算法’/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-日历程序" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/04/日历程序/">日历程序</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/04/日历程序/" class="archive-article-date">
-  	<time datetime="2019-08-04T13:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#使用LocalDate写日历</p>
-<blockquote>
-<p>显示当前页的日历<br><br>方法难点：minusDay(int day);<br>方法的实现是当前的日期减去day天后的日期，这个方法返回的是一个Local类型的数据相当于yyy-mmm-ddd，如果要得到这个月的第一天，就需要day=day-1</p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/04/日历程序/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-算法题记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/02/算法题记录/">算法题记录</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/02/算法题记录/" class="archive-article-date">
-  	<time datetime="2019-08-02T06:48:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#剑锋offer（Java）</p>
-<p>#持续更新</p>
-<blockquote>
-<p>1.在一个字符串(0&lt;=字符串长度&lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返回它的位置, 如果没有则返回 -1（需要区分大小写）.</p>
-</blockquote>
-<p>思路：控制时间和空间的效率，使用哈希表（key-value关系）</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/02/算法题记录/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-我的第一篇博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/01/我的第一篇博客/">我的第一篇博客</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/01/我的第一篇博客/" class="archive-article-date">
-  	<time datetime="2019-08-01T08:52:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>##第一章<br>内容</p>
-<hr>
-<p>##参考文章</p>
-<p><a href="http://www.aaa.cn" target="_blank" rel="noopener">www.aaa.cn</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/01/我的第一篇博客/">展开全文 >></a>
         </p>
       
 
